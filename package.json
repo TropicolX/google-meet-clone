@@ -9,18 +9,24 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/backend": "^1.6.2",
+    "@clerk/nextjs": "^5.3.0",
+    "@stream-io/video-react-sdk": "^1.2.20",
+    "clsx": "^2.1.1",
+    "next": "14.2.5",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.2.5"
+    "stream-chat": "^8.37.0",
+    "stream-chat-react": "^11.23.5"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.5",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.5"
+    "typescript": "^5"
   }
 }

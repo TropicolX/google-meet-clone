@@ -1,113 +1,115 @@
-import Image from "next/image";
+'use client';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
-export default function Home() {
+import Button from '../components/Button';
+import ButtonWithIcon from '../components/ButtonWithIcon';
+import Header from '../components/Header';
+import PlainButton from '../components/PlainButton';
+import TextField from '../components/TextField';
+
+interface HomeProps {}
+
+const Home = ({}: HomeProps) => {
+  //   Pages
+  // - Landing page (Create a meeting, Enter a code) *
+  // - Sign up/Login page
+  // - Lobby page
+  // - Real-time meeting page
+
+  // Features
+  // - Authentication
+  // - Joining a meeting with a room id
+  // - Starting an instant meeting functionality
+  // - Real-time meeting room (call lobby)
+  // - Screen sharing
+  // - Chatting functionality
+
+  const [code, setCode] = useState('');
+  const router = useRouter();
+  const signedIn = false;
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <div>
+      <Header />
+      <main className="flex flex-col items-center justify-center px-6">
+        <div className="w-full max-w-[39rem] p-4 pt-[28px] text-center inline-flex flex-col items-center basis-auto shrink-0">
+          <h1 className="font-['Google_Sans'] text-[2.812rem] leading-[3.25rem] tracking-normal text-[#1f1f1f] pb-2">
+            Video calls and meetings for everyone
+          </h1>
+          <p className="text-[1.375rem] leading-[1.75rem] text-[#444746] pb-[2rem]">
+            Connect, collaborate, and celebrate from anywhere with Moogle Meet
+          </p>
         </div>
-      </div>
-
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
+        <div className="w-full max-w-[38rem] flex justify-center">
+          <div className="flex flex-col items-start sm:flex-row gap-6 sm:gap-2 sm:items-center justify-center">
+            {signedIn && (
+              <ButtonWithIcon
+                icon={
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="18px"
+                    viewBox="0 -960 960 960"
+                    width="18px"
+                    fill="#fff"
+                  >
+                    <path d="M360-320h80v-120h120v-80H440v-120h-80v120H240v80h120v120ZM160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h480q33 0 56.5 23.5T720-720v180l160-160v440L720-420v180q0 33-23.5 56.5T640-160H160Zm0-80h480v-480H160v480Zm0 0v-480 480Z" />
+                  </svg>
+                }
+              >
+                New meeting
+              </ButtonWithIcon>
+            )}
+            {!signedIn && <Button size="sm">Sign in</Button>}
+            <div className="flex items-center gap-2 sm:ml-4">
+              <TextField
+                label="Code or link"
+                name="code"
+                placeholder="Enter a code or link"
+                value={code}
+                onChange={(e) => setCode(e.target.value)}
+              />
+              <PlainButton
+                onClick={() => router.push(`/${code}`)}
+                disabled={!code}
+              >
+                Join
+              </PlainButton>
+            </div>
+          </div>
+        </div>
+        <div className="w-full max-w-[38rem] mx-auto border-b-[1px] border-b-[#747775] self-stretch mt-8 mb-20" />
+        <div className="flex flex-col items-center justify-center gap-8">
+          <Image
+            src="https://www.gstatic.com/meet/user_edu_get_a_link_light_90698cd7b4ca04d3005c962a3756c42d.svg"
+            alt="Get a link you can share"
+            width={248}
+            height={248}
+          />
+          <div className="flex flex-col gap-2 text-center max-w-[362px]">
+            <h2 className="text-[1.5rem] leading-[2rem] tracking-normal text-[#000000DE]">
+              Get a link you can share
+            </h2>
+            <p className="font-[Roboto] text-[.875rem] leading-[1.25rem] text-[#000000DE] pb-[2rem] grow">
+              Click <span className="font-bold">New meeting</span> to get a link
+              you can send to people you want to meet with
+            </p>
+          </div>
+        </div>
+        <footer className="w-full max-w-[38rem] mt-20 pb-4 text-start">
+          <div className="text-[.75rem] leading-[1rem] text-[#444746] tracking-[.006rem]">
+            <span className="cursor-pointer">
+              <a className="text-[#0b57d0] hover:underline" href="#">
+                Learn more
+              </a>{' '}
+              about Moogle Meet
             </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+          </div>
+        </footer>
+      </main>
+    </div>
   );
-}
+};
+
+export default Home;
