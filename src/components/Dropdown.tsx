@@ -9,11 +9,11 @@ import {
 // Handler hook for when Outside click dropdown close
 // give me the correct type for handler
 let useClickOutside = (handler: () => void) => {
-  let domNode = useRef();
+  let domNode = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let maybeHandler = (event: MouseEvent) => {
-      if (!domNode.current!.contains(event.target)) {
+      if (!domNode.current!.contains(event.target as Node)) {
         handler();
       }
     };
