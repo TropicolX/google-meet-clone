@@ -6,6 +6,7 @@ import {
 import clsx from 'clsx';
 
 import useUserColor from '../hooks/useUserColor';
+import Image from 'next/image';
 
 export const placeholderClassName = 'participant-view-placeholder';
 
@@ -17,7 +18,7 @@ const VideoPlaceholder = forwardRef<HTMLDivElement, VideoPlaceholderProps>(
 
     const randomColor = useMemo(() => {
       return color(name);
-    }, []);
+    }, [color, name]);
 
     return (
       <div
@@ -26,10 +27,12 @@ const VideoPlaceholder = forwardRef<HTMLDivElement, VideoPlaceholderProps>(
         className={`absolute w-full h-full rounded-[inherit] bg-[#3c4043] flex items-center justify-center ${placeholderClassName}`}
       >
         {participant.image && (
-          <img
-            className="w-[160px] h-[160px] rounded-full overflow-hidden"
+          <Image
+            className="rounded-full overflow-hidden"
             src={participant.image}
             alt={participant.userId}
+            width={160}
+            height={160}
           />
         )}
         <div

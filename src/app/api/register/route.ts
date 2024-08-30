@@ -1,4 +1,3 @@
-import { clerkClient } from '@clerk/nextjs';
 import { StreamChat } from 'stream-chat';
 
 export async function POST(request: Request) {
@@ -28,9 +27,9 @@ export async function POST(request: Request) {
       streamRegistered: true,
     },
   };
-  const updatedUser = await clerkClient.users.updateUser(userId, params);
+  // const updatedUser = await clerkClient.updateUser(userId, params);
 
-  console.log('[/api/register-user] User:', updatedUser);
+  // console.log('[/api/register-user] User:', updatedUser);
   const response = {
     userId: userId,
     userName: mail,

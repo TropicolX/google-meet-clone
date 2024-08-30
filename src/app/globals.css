@@ -44,7 +44,7 @@ body {
 }
 
 .root-theme .str-video__participant-view {
-  max-width: 1286px;
+  max-width: 1294px;
   animation: delayedFadeIn .75s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
 }
