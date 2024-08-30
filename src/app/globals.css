@@ -20,6 +20,7 @@ body {
   max-height: calc(100svh - 6rem);
   padding: 0;
   gap: 12px;
+  position: relative;
 }
 
 .root-theme .str-video__paginated-grid-layout__wrapper {
@@ -44,8 +45,8 @@ body {
 
 .root-theme .str-video__participant-view {
   max-width: 1286px;
-  transition: all .5s cubic-bezier(0.4, 0, 0.2, 1);
   animation: delayedFadeIn .75s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
 }
 
 .root-theme .str-video__paginated-grid-layout--one .participant-view-placeholder {

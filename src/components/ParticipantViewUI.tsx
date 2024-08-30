@@ -21,6 +21,8 @@ import {
 } from '@stream-io/video-react-sdk';
 import clsx from 'clsx';
 
+export const speechRingClassName = 'speech-ring';
+
 const ParticipantViewUI = () => {
   const [showMenu, setShowMenu] = useState(false);
   const call = useCall();
@@ -80,9 +82,16 @@ const ParticipantViewUI = () => {
           </svg>
         </div>
       )}
-      {isSpeaking && hasAudioTrack && (
-        <div className="absolute left-0 top-0 w-full h-full ring-[5px] ring-inset ring-[#659df6] rounded-[12px] speech-ring" />
-      )}
+      {
+        <div
+          className={clsx(
+            isSpeaking &&
+              hasAudioTrack &&
+              'ring-[5px] ring-inset ring-[#659df6]',
+            `absolute left-0 top-0 w-full h-full rounded-[12px] ${speechRingClassName}`
+          )}
+        />
+      }
       <div
         onMouseOver={() => {
           setShowMenu(true);

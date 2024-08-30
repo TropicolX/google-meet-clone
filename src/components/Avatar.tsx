@@ -13,6 +13,8 @@ interface AvatarProps {
   participant?: StreamVideoParticipant | CallParticipantResponse | {};
 }
 
+export const avatarClassName = 'avatar';
+
 const Avatar = ({ text = '', width, participant = {} }: AvatarProps) => {
   const color = useUserColor();
 
@@ -58,7 +60,7 @@ const Avatar = ({ text = '', width, participant = {} }: AvatarProps) => {
       }}
       className={clsx(
         width ? `w-[${width}px]` : 'w-[30%] max-w-[10rem]',
-        'aspect-square rounded-full uppercase text-white font-[sans-serif] font-medium flex items-center justify-center'
+        `aspect-square rounded-full uppercase text-white font-[sans-serif] font-medium flex items-center justify-center ${avatarClassName}`
       )}
     >
       <span className={clsx(text ? 'text-[.75rem]' : 'text-[1rem]')}>

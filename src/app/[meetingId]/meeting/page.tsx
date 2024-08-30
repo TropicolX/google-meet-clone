@@ -14,6 +14,7 @@ import ParticipantViewUI from '../../../components/ParticipantViewUI';
 import useTime from '../../../hooks/useTime';
 import VideoPlaceholder from '../../../components/VideoPlaceholder';
 import MeetingPopup from '../../../components/MeetingPopup';
+import useAnimateGrid from '../../../hooks/useAnimateGrid';
 
 interface MeetingProps {
   params: {
@@ -26,12 +27,13 @@ const Meeting = ({ params }: MeetingProps) => {
   const router = useRouter();
   const call = useCall();
   const { currentTime } = useTime();
-  const { useCameraState, useMicrophoneState } = useCallStateHooks();
+  const { ref } = useAnimateGrid();
+  const { useCameraState, useMicrophoneState, useCallCallingState } =
+    useCallStateHooks();
+  const callingState = useCallCallingState();
   const { camera, optimisticIsMute: isCameraMute } = useCameraState();
   const { microphone, optimisticIsMute: isMicrophoneMute } =
     useMicrophoneState();
-  const { useCallCallingState } = useCallStateHooks();
-  const callingState = useCallCallingState();
 
   useEffect(() => {
     if (
@@ -67,7 +69,10 @@ const Meeting = ({ params }: MeetingProps) => {
 
   return (
     <StreamTheme className="root-theme">
-      <div className="relative w-[100svw] h-[100svh] bg-[#202124] overflow-hidden">
+      <div
+        ref={ref}
+        className="relative w-[100svw] h-[100svh] bg-[#202124] overflow-hidden"
+      >
         <div className="w-full h-[calc(100%-5rem)] pt-4 px-4 relative">
           <PaginatedGridLayout
             ParticipantViewUI={ParticipantViewUI}
