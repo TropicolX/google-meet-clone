@@ -92,7 +92,7 @@ const Meeting = ({ params }: MeetingProps) => {
           <div className="flex flex-[1_1_25%] items-center text-start justify-start ml-3 truncate max-w-full">
             <div className="flex items-center overflow-hidden mx-3 h-[5rem] gap-3">
               <span className="font-medium">{currentTime}</span>
-              <span className="font-medium truncate">{'|'}</span>
+              <span>{'|'}</span>
               <span className="font-medium truncate">{meetingId}</span>
             </div>
           </div>

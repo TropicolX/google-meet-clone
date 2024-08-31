@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
 import clsx from 'clsx';
 
+import Exclamation from './icons/Exclamation';
+
 interface IconButtonProps {
   icon: ReactNode;
   onClick?: () => void;
@@ -18,15 +20,7 @@ const IconButton = ({
 }: IconButtonProps) => {
   const alertIcon = (
     <div className="absolute top-[-5px] right-0 w-[24px] h-[24px] bg-[#fa7b17] rounded-full flex items-center justify-center">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        height="24px"
-        viewBox="0 -960 960 960"
-        width="24px"
-        fill="#fff"
-      >
-        <path d="M444-384v-336h72v336h-72Zm0 144v-72h72v72h-72Z" />
-      </svg>
+      <Exclamation />
     </div>
   );
 

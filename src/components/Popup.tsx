@@ -1,5 +1,7 @@
-import clsx from 'clsx';
 import React, { forwardRef, ReactNode } from 'react';
+import clsx from 'clsx';
+
+import Close from './icons/Close';
 
 interface PopupProps {
   className?: string;
@@ -40,12 +42,7 @@ const Popup = forwardRef<HTMLDivElement | null, PopupProps>(function Popup(
           className="bg-transparent outline-none hover:bg-[#0000000a] rounded-full"
         >
           <div className="w-[48px] h-[48px] p-3">
-            <i
-              className="material-symbols-outlined text-[#202124]"
-              aria-hidden="true"
-            >
-              close
-            </i>
+            <Close />
           </div>
         </button>
       </div>

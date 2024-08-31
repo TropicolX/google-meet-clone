@@ -1,4 +1,5 @@
 import { CallParticipantResponse } from '@stream-io/video-react-sdk';
+
 import Avatar from './Avatar';
 
 interface CallParticipantsProps {
@@ -12,7 +13,7 @@ const CallParticipants = ({ participants }: CallParticipantsProps) => {
         participants[0].user.name || participants[0].user.id
       } is in this call`;
     } else {
-      // if there are more than 4 then x, y, z and 2 others are in this call
+      // if there are more than 4 then x, y, z and n - 3 more are in this call
       // if there are 4 or less then x, y, z and a are in this call
       return (
         participants

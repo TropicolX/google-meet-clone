@@ -6,8 +6,8 @@ import {
   useState,
 } from 'react';
 
-// Handler hook for when Outside click dropdown close
-// give me the correct type for handler
+import ArrowDropdown from './icons/ArrowDropdown';
+
 let useClickOutside = (handler: () => void) => {
   let domNode = useRef<HTMLDivElement>(null);
 
@@ -27,7 +27,6 @@ let useClickOutside = (handler: () => void) => {
 
   return domNode;
 };
-// Handler hook for when Outside click dropdown close End Code====>>
 
 interface DropdownProps {
   icon?: ReactNode;
@@ -72,15 +71,7 @@ const Dropdown = ({
               )}
               <span className="max-w-[130px] truncate">{label}</span>
               <span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="20px"
-                  viewBox="0 -960 960 960"
-                  width="20px"
-                  fill="#5f6368"
-                >
-                  <path d="M480-384 288-576h384L480-384Z" />
-                </svg>
+                <ArrowDropdown />
               </span>
             </button>
             <div
