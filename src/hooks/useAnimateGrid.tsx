@@ -3,19 +3,28 @@ import { useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 
-import { placeholderClassName } from '../components/VideoPlaceholder';
 import { avatarClassName } from '../components/Avatar';
-import { speechRingClassName } from '../components/ParticipantViewUI';
+import {
+  menuOverlayClassName,
+  speechRingClassName,
+} from '../components/ParticipantViewUI';
+import { placeholderClassName } from '../components/VideoPlaceholder';
+
+type PreviousValues = Map<
+  string,
+  {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    total: number;
+  }
+>;
 
 gsap.registerPlugin(useGSAP);
 
 const useAnimateGrid = () => {
-  const previousRef = useRef<
-    Map<
-      string,
-      { x: number; y: number; width: number; height: number; total: number }
-    >
-  >(new Map());
+  const previousRef = useRef<PreviousValues>(new Map());
   const ref = useRef<HTMLDivElement>(null);
 
   useGSAP(
@@ -35,10 +44,10 @@ const useAnimateGrid = () => {
 
         items.forEach((item, index) => {
           const { left, top, width, height } = item.getBoundingClientRect();
-          const containerRect = layout.getBoundingClientRect();
+          const container = layout.getBoundingClientRect();
 
-          const startX = left - containerRect.left;
-          const startY = top - containerRect.top;
+          const startX = left - container.left;
+          const startY = top - container.top;
 
           const id = index.toString();
           const prevPosition = previousRef.current.get(id) || {
@@ -77,7 +86,7 @@ const useAnimateGrid = () => {
           // animate element's children
           item
             .querySelectorAll(
-              `:scope > :not(video):not(.${placeholderClassName}):not(.${speechRingClassName})`
+              `:scope > :not(video):not(.${menuOverlayClassName}):not(.${placeholderClassName}):not(.${speechRingClassName})`
             )
             .forEach((el) => {
               gsap.fromTo(el, innerFrom, {
@@ -91,14 +100,50 @@ const useAnimateGrid = () => {
               });
             });
 
-          const avatar = item.querySelector(`.${avatarClassName}`);
-          if (avatar) {
-            gsap.fromTo(avatar, innerFrom, {
-              scaleX: 1,
-              scaleY: 1,
-              duration: 0.5,
-              ease: 'power3.inOut',
-            });
+          const video = item.querySelector('video');
+          if (!video) {
+            const avatar = item.querySelector(`.${avatarClassName}`);
+            if (avatar) {
+              gsap.fromTo(avatar, innerFrom, {
+                scaleX: 1,
+                scaleY: 1,
+                duration: 0.5,
+                ease: 'power3.inOut',
+              });
+            }
+          }
+
+          // animate video cover when there are 3 participants or less
+          if (
+            items.length < 3 ||
+            (items.length === 3 && prevPosition.total === 2)
+          ) {
+            if (video) {
+              gsap.fromTo(
+                item.querySelector(`.${menuOverlayClassName}`),
+                {
+                  background: '#202124',
+                  opacity: 1,
+                  outlineWidth: 2,
+                  outlineStyle: 'solid',
+                  outlineColor: '#202124',
+                  ...(items.length === 1 && {
+                    borderRadius: '0px',
+                  }),
+                },
+                {
+                  opacity: 0,
+                  outlineWidth: 2,
+                  duration: 0.8,
+                  ease: 'power2.inOut',
+                  onComplete: () => {
+                    gsap.set(item.querySelector(`.${menuOverlayClassName}`), {
+                      attr: { style: '' },
+                    });
+                  },
+                }
+              );
+            }
           }
 
           // animate element

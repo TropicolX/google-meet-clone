@@ -22,6 +22,7 @@ import {
 import clsx from 'clsx';
 
 export const speechRingClassName = 'speech-ring';
+export const menuOverlayClassName = 'menu-overlay';
 
 const ParticipantViewUI = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -97,7 +98,7 @@ const ParticipantViewUI = () => {
           setShowMenu(true);
         }}
         onMouseOut={() => setShowMenu(false)}
-        className="absolute z-[1] left-0 top-0 w-full h-full bg-transparent"
+        className={`absolute z-[1] left-0 top-0 w-full h-full rounded-[12px] bg-transparent ${menuOverlayClassName}`}
       />
       <div
         className={clsx(
