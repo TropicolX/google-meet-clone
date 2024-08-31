@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@100;200;300;400;500;600;700;800;900&family=Google+Sans+Display:wght@100;200;300;400;500;600;700;800;900&&family=Product+Sans:wght@100;200;300;400;500;600;700;800;900&family=Roboto&family=Google+Symbols:opsz,wght,FILL,GRAD@24,400,0,0&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@100;200;300;400;500;600;700;800;900&family=Google+Sans+Display:wght@100;200;300;400;500;600;700;800;900&&family=Product+Sans:wght@100;200;300;400;500;600;700;800;900&family=Roboto&family=Google+Symbols:opsz,wght,FILL,GRAD@24,400,0,0&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -121,6 +121,10 @@ body {
 .google-symbols {
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
   color: white;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
 }
 
 @layer utilities {

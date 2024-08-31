@@ -7,6 +7,7 @@ import {
   StreamTheme,
   useCall,
   useCallStateHooks,
+  useConnectedUser,
 } from '@stream-io/video-react-sdk';
 
 import IconButton from '../../../components/IconButton';
@@ -26,6 +27,7 @@ const Meeting = ({ params }: MeetingProps) => {
   const { meetingId } = params;
   const router = useRouter();
   const call = useCall();
+  const user = useConnectedUser();
   const { currentTime } = useTime();
   const { ref } = useAnimateGrid();
   const { useCameraState, useMicrophoneState, useCallCallingState } =
@@ -34,6 +36,7 @@ const Meeting = ({ params }: MeetingProps) => {
   const { camera, optimisticIsMute: isCameraMute } = useCameraState();
   const { microphone, optimisticIsMute: isMicrophoneMute } =
     useMicrophoneState();
+  const isCreator = call?.state.createdBy?.id === user?.id;
 
   useEffect(() => {
     if (
@@ -210,7 +213,7 @@ const Meeting = ({ params }: MeetingProps) => {
             />
           </div>
         </div>
-        <MeetingPopup />
+        {isCreator && <MeetingPopup />}
       </div>
     </StreamTheme>
   );

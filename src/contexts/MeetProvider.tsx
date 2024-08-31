@@ -1,11 +1,10 @@
 import {
   Call,
-  CallingState,
   StreamCall,
   StreamVideo,
   StreamVideoClient,
 } from '@stream-io/video-react-sdk';
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useState } from 'react';
 
 type MeetContextType = {
   client: StreamVideoClient | undefined;

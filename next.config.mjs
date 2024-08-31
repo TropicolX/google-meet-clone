@@ -7,6 +7,9 @@ const nextConfig = {
       {
         hostname: 'cdn.tailgrids.com',
       },
+      {
+        hostname: 'gstatic.com',
+      },
     ],
   },
 };
