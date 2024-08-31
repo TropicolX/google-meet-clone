@@ -23,17 +23,16 @@ interface LobbyProps {
 
 const Lobby = ({ params }: LobbyProps) => {
   const { meetingId } = params;
-  const [loading, setLoading] = useState(true);
-  const [joining, setJoining] = useState(false);
-  const [participants, setParticipants] = useState<CallParticipantResponse[]>(
-    []
-  );
-
   const router = useRouter();
   const connectedUser = useConnectedUser();
   const call = useCall();
   const { useCallCallingState } = useCallStateHooks();
   const callingState = useCallCallingState();
+  const [loading, setLoading] = useState(true);
+  const [joining, setJoining] = useState(false);
+  const [participants, setParticipants] = useState<CallParticipantResponse[]>(
+    []
+  );
 
   useEffect(() => {
     const leavePreviousCall = async () => {
@@ -44,7 +43,6 @@ const Lobby = ({ params }: LobbyProps) => {
 
     const getCurrentCall = async () => {
       if (!(call && connectedUser)) return;
-
       const callData = await call.getOrCreate({
         data: {
           members: [
@@ -55,7 +53,6 @@ const Lobby = ({ params }: LobbyProps) => {
           ],
         },
       });
-
       setParticipants(callData.call.session?.participants || []);
       setLoading(false);
     };
@@ -63,14 +60,6 @@ const Lobby = ({ params }: LobbyProps) => {
     leavePreviousCall();
     !joining && getCurrentCall();
   }, [call, connectedUser, callingState, joining]);
-
-  const joinCall = async () => {
-    setJoining(true);
-    if (callingState !== CallingState.JOINED) {
-      await call?.join();
-    }
-    router.push(`/${meetingId}/meeting`);
-  };
 
   const heading = useMemo(() => {
     if (loading) return 'Getting ready...';
@@ -91,6 +80,14 @@ const Lobby = ({ params }: LobbyProps) => {
         return null;
     }
   }, [loading, joining, participants]);
+
+  const joinCall = async () => {
+    setJoining(true);
+    if (callingState !== CallingState.JOINED) {
+      await call?.join();
+    }
+    router.push(`/${meetingId}/meeting`);
+  };
 
   return (
     <div>

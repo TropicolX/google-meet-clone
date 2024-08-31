@@ -1,4 +1,5 @@
 import { forwardRef, useMemo } from 'react';
+import Image from 'next/image';
 import {
   useParticipantViewContext,
   type VideoPlaceholderProps,
@@ -6,7 +7,6 @@ import {
 import clsx from 'clsx';
 
 import useUserColor from '../hooks/useUserColor';
-import Image from 'next/image';
 
 export const placeholderClassName = 'participant-view-placeholder';
 

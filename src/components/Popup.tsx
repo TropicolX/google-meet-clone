@@ -35,7 +35,10 @@ const Popup = forwardRef<HTMLDivElement | null, PopupProps>(function Popup(
         <div className="text-[1.125rem] leading-[1.5rem] grow my-[15px] tracking-normal">
           {title}
         </div>
-        <button onClick={closePopup} className="bg-transparent outline-none">
+        <button
+          onClick={closePopup}
+          className="bg-transparent outline-none hover:bg-[#0000000a] rounded-full"
+        >
           <div className="w-[48px] h-[48px] p-3">
             <i
               className="material-symbols-outlined text-[#202124]"

@@ -21,7 +21,7 @@ const Clipboard = ({ value }: ClipboardProps) => {
         ref={inputRef}
         onChange={(e) => e.preventDefault()}
         value={value}
-        className="h-10 w-full rounded-[4px] bg-[#f1f3f4] py-3 pl-3 pr-10 font-[Roboto] text-[#202124] text-sm outline-none duration-200"
+        className="h-10 w-full rounded-[4px] bg-[#f1f3f4] border border-[#f1f3f4] py-3 pl-3 pr-10 font-[Roboto] text-[#202124] text-sm outline-none duration-200"
       />
       <button
         onClick={copyToClipboard}

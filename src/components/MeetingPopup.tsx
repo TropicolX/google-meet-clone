@@ -1,16 +1,23 @@
 import Image from 'next/image';
+import { useEffect } from 'react';
+import { useParams } from 'next/navigation';
+import { useCall, useConnectedUser } from '@stream-io/video-react-sdk';
 
 import ButtonWithIcon from './ButtonWithIcon';
 import Clipboard from './Clipboard';
 import Popup from './Popup';
 import useLocalStorage from '../hooks/useLocalStorage';
-import { useConnectedUser } from '@stream-io/video-react-sdk';
 
 interface MeetingPopupProps {}
 
 const MeetingPopup = ({}: MeetingPopupProps) => {
-  const [seen, setSeen] = useLocalStorage('meetingPopupSeen', false);
   const user = useConnectedUser();
+  const call = useCall();
+  const meetingId = call?.id!;
+
+  const [seen, setSeen] = useLocalStorage(`meetingPopupSeen`, {
+    [meetingId]: false,
+  });
 
   const email =
     'jacobsbusayo@gmail.com' || user?.custom?.email || user?.name || user?.id;
@@ -20,12 +27,35 @@ const MeetingPopup = ({}: MeetingPopupProps) => {
     .replace('/meeting', '');
 
   const onClose = () => {
-    setSeen(true);
+    setSeen({
+      ...seen,
+      [meetingId]: true,
+    });
   };
+
+  useEffect(() => {
+    setSeen({
+      ...seen,
+      [meetingId]: seen[meetingId] || false,
+    });
+
+    const setSeenTrue = () => {
+      if (seen[meetingId]) return;
+      setSeen({
+        ...seen,
+        [meetingId]: true,
+      });
+    };
+
+    return () => {
+      setSeenTrue();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Popup
-      open={!seen}
+      open={!seen[meetingId]}
       onClose={onClose}
       title={<h2>Your meeting&apos;s ready</h2>}
     >
