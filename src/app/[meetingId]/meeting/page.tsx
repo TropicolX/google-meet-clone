@@ -95,7 +95,7 @@ const Meeting = ({ params }: MeetingProps) => {
             </div>
           </div>
           {/* Meeting Controls */}
-          <div className="relative flex grow shrink basis-1/4 items-center justify-center px-1.5 gap-3 ml-3 sm:ml-0">
+          <div className="relative flex grow shrink basis-1/4 items-center justify-center px-1.5 gap-3 ml-0">
             <ToggleAudioButton />
             <ToggleVideoButton />
             <CallControlButton
