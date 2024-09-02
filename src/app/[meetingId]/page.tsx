@@ -57,7 +57,6 @@ const Lobby = ({ params }: LobbyProps) => {
       setLoading(false);
     };
 
-    console.log(joining);
     leavePreviousCall();
     !joining && getCurrentCall();
   }, [call, connectedUser, callingState, joining]);
