@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Button from '@/components/Button';
 import PlainButton from '@/components/PlainButton';
 import Image from 'next/image';
+import { CallingState, useCallStateHooks } from '@stream-io/video-react-sdk';
 
 interface MeetingEndProps {
   params: {
@@ -17,8 +18,13 @@ const MeetingEnd = ({ params }: MeetingEndProps) => {
   const router = useRouter();
   const audioRef = useRef<HTMLAudioElement>(null);
   const [countdownNumber, setCountdownNumber] = useState(60);
+  const { useCallCallingState } = useCallStateHooks();
+  const callingState = useCallCallingState();
 
   useEffect(() => {
+    if (callingState !== CallingState.LEFT) {
+      router.push(`/`);
+    }
     audioRef.current?.play();
     setCountdownNumber(59);
 
@@ -42,6 +48,8 @@ const MeetingEnd = ({ params }: MeetingEndProps) => {
   const returnHome = () => {
     router.push('/');
   };
+
+  if (callingState !== CallingState.LEFT) return null;
 
   return (
     <div className="w-full">

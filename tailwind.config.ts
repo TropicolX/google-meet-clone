@@ -11,6 +11,10 @@ const config: Config = {
       screens: {
         lg: '1000px',
       },
+      backgroundImage: {
+        'gradient-overlay':
+          'linear-gradient(0deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.30015756302521013) 11%, rgba(0,0,0,0) 21%, rgba(0,0,0,0) 79%, rgba(0,0,0,0.30015756302521013) 89%, rgba(0,0,0,0.7035189075630253) 100%)',
+      },
       colors: {
         primary: 'var(--primary)',
         'meet-black': 'var(--meet-black)',
@@ -33,8 +37,6 @@ const config: Config = {
         'meet-red': '#ea4335',
         'hover-red': '#eb5346',
         'meet-orange': '#fa7b17',
-        'gradient-overlay':
-          'linear-gradient(0deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.30015756302521013) 11%, rgba(0,0,0,0) 21%, rgba(0,0,0,0) 79%, rgba(0,0,0,0.30015756302521013) 89%, rgba(0,0,0,0.7035189075630253) 100%)',
       },
       spacing: {
         '4.5': '1.125rem',
