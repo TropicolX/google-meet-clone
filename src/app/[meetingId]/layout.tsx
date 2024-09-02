@@ -1,7 +1,7 @@
 'use client';
 import { ReactNode } from 'react';
 
-import MeetProvider from '../../contexts/MeetProvider';
+import MeetProvider from '@/contexts/MeetProvider';
 
 type LayoutProps = {
   children: ReactNode;

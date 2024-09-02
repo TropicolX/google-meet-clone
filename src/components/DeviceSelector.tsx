@@ -12,10 +12,14 @@ type DeviceSelectorProps = {
   onSelect: (deviceId: string) => void;
   icon: ReactNode;
   disabled?: boolean;
+  className?: string;
+  dark?: boolean;
 };
 
 type SelectorProps = {
   disabled?: boolean;
+  className?: string;
+  dark?: boolean;
 };
 
 export const DeviceSelector = ({
@@ -24,6 +28,8 @@ export const DeviceSelector = ({
   onSelect,
   icon,
   disabled = false,
+  className = '',
+  dark = false,
 }: DeviceSelectorProps) => {
   const label =
     devices?.find((device) => device.deviceId === selectedDeviceId)?.label! ||
@@ -42,12 +48,16 @@ export const DeviceSelector = ({
         }))!
       }
       disabled={disabled}
+      className={className}
+      dark={dark}
     />
   );
 };
 
 export const AudioInputDeviceSelector = ({
   disabled = false,
+  className = '',
+  dark,
 }: SelectorProps) => {
   const { useMicrophoneState } = useCallStateHooks();
   const { microphone, devices, selectedDevice } = useMicrophoneState();
@@ -57,14 +67,18 @@ export const AudioInputDeviceSelector = ({
       devices={devices}
       selectedDeviceId={selectedDevice}
       onSelect={(deviceId) => microphone.select(deviceId)}
-      icon={<Mic width={20} height={20} color="#202124" />}
+      icon={<Mic width={20} height={20} color="var(--meet-black)" />}
       disabled={disabled}
+      className={className}
+      dark={dark}
     />
   );
 };
 
 export const VideoInputDeviceSelector = ({
   disabled = false,
+  className = '',
+  dark = false,
 }: SelectorProps) => {
   const { useCameraState } = useCallStateHooks();
   const { camera, devices, selectedDevice } = useCameraState();
@@ -74,14 +88,18 @@ export const VideoInputDeviceSelector = ({
       devices={devices}
       selectedDeviceId={selectedDevice}
       onSelect={(deviceId) => camera.select(deviceId)}
-      icon={<Videocam width={18} height={18} color="#202124" />}
+      icon={<Videocam width={18} height={18} color="var(--meet-black)" />}
       disabled={disabled}
+      className={className}
+      dark={dark}
     />
   );
 };
 
 export const AudioOutputDeviceSelector = ({
   disabled = false,
+  className = '',
+  dark = false,
 }: SelectorProps) => {
   const { useSpeakerState } = useCallStateHooks();
   const { speaker, devices, selectedDevice, isDeviceSelectionSupported } =
@@ -100,8 +118,10 @@ export const AudioOutputDeviceSelector = ({
           : 'Default - ...'
       }
       onSelect={(deviceId) => speaker.select(deviceId)}
-      icon={<VolumeUp width={20} height={20} color="#202124" />}
+      icon={<VolumeUp width={20} height={20} color="var(--meet-black)" />}
       disabled={disabled}
+      className={className}
+      dark={dark}
     />
   );
 };

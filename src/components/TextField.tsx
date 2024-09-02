@@ -20,7 +20,7 @@ const TextField = ({
 }: TextFieldProps) => {
   return (
     <>
-      <label className="mb-[10px] block text-base font-medium text-black sr-only">
+      <label className="mb-2.5 block text-base font-medium text-black sr-only">
         {label}
       </label>
       <div className="relative">
@@ -31,7 +31,7 @@ const TextField = ({
           onChange={onChange}
           placeholder={placeholder}
           autoComplete="false"
-          className="w-[231px] h-[48px] tracking-[.00625rem] leading-4 font-[Roboto,_Arial,_sans-serif] bg-transparent rounded-[4px] ring-1 ring-inset ring-[#80868b] hover:ring-[#202124] py-[10px] pr-4 pl-12 outline-none transition focus:ring-[#1a73e8] focus:ring-2 placeholder:font-normal placeholder:text-[#5f6367] disabled:cursor-default disabled:bg-gray-2"
+          className="w-57.5 h-12 tracking-loose leading-4 font-roboto bg-transparent rounded ring-1 ring-inset ring-[#80868b] hover:ring-meet-black py-2.5 pr-4 pl-12 outline-none transition focus:ring-2 focus:ring-primary placeholder:font-normal placeholder:text-meet-gray disabled:cursor-default disabled:bg-gray-2"
         />
         <span className="absolute top-1/2 left-4 -translate-y-1/2">
           <KeyboardFilled />

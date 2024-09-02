@@ -3,16 +3,61 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@layer base {
+  :root {
+    --primary: #1a73e8;
+    --meet-black: #202124;
+    --icon-blue: #8ab4f7;
+  }
+
+  body {
+    @apply font-google-sans bg-white tracking-looser text-dark-gray;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 }
 
-body {
-  font-family: 'Google Sans', Roboto, sans-serif;
-  letter-spacing: 0.0107142857rem;
-  background: white;
-  color: #3c4043;
+@layer components {
+
+  .call-control-button,
+  .call-info-button {
+    @apply rounded-full;
+  }
+
+  .call-control-button {
+    @apply !w-10 !h-10 bg-dark-gray !border-dark-gray;
+
+    &:hover {
+      @apply !bg-[#444649];
+    }
+  }
+
+  .call-info-button {
+    @apply !w-12 !h-12 !bg-transparent !border-transparent p-3;
+
+    &:hover {
+      @apply !bg-[#28292c];
+    }
+  }
+
+  .toggle-button-alert,
+  .leave-call-button {
+    @apply !bg-meet-red !border-meet-red;
+
+    &:hover {
+      @apply !bg-hover-red;
+    }
+  }
+
+  .leave-call-button {
+    @apply !w-14;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
 }
 
 .root-theme .str-video__paginated-grid-layout .str-video__paginated-grid-layout__group {
@@ -45,8 +90,8 @@ body {
 
 .root-theme .str-video__participant-view {
   max-width: 1294px;
-  animation: delayedFadeIn .75s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
+  @apply animate-fade-in;
 }
 
 .root-theme .str-video__paginated-grid-layout--one .participant-view-placeholder {
@@ -125,24 +170,4 @@ body {
 
 .material-symbols-outlined {
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
-
-@keyframes delayedFadeIn {
-  0% {
-    opacity: 0;
-  }
-
-  66% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
 }

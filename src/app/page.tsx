@@ -3,12 +3,12 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
-import Button from '../components/Button';
-import ButtonWithIcon from '../components/ButtonWithIcon';
-import Header from '../components/Header';
-import PlainButton from '../components/PlainButton';
-import TextField from '../components/TextField';
-import Videocall from '../components/icons/Videocall';
+import Button from '@/components/Button';
+import ButtonWithIcon from '@/components/ButtonWithIcon';
+import Header from '@/components/Header';
+import PlainButton from '@/components/PlainButton';
+import TextField from '@/components/TextField';
+import Videocall from '@/components/icons/Videocall';
 
 const Home = () => {
   // Features
@@ -27,15 +27,15 @@ const Home = () => {
     <div>
       <Header />
       <main className="flex flex-col items-center justify-center px-6">
-        <div className="w-full max-w-[39rem] p-4 pt-[28px] text-center inline-flex flex-col items-center basis-auto shrink-0">
-          <h1 className="font-['Google_Sans'] text-[2.812rem] leading-[3.25rem] tracking-normal text-[#1f1f1f] pb-2">
+        <div className="w-full max-w-2xl p-4 pt-7 text-center inline-flex flex-col items-center basis-auto shrink-0">
+          <h1 className="text-5xl tracking-normal text-black pb-2">
             Video calls and meetings for everyone
           </h1>
-          <p className="text-[1.375rem] leading-[1.75rem] text-[#444746] pb-[2rem]">
+          <p className="text-1x text-gray pb-8">
             Connect, collaborate, and celebrate from anywhere with Moogle Meet
           </p>
         </div>
-        <div className="w-full max-w-[38rem] flex justify-center">
+        <div className="w-full max-w-xl flex justify-center">
           <div className="flex flex-col items-start sm:flex-row gap-6 sm:gap-2 sm:items-center justify-center">
             {signedIn && (
               <ButtonWithIcon icon={<Videocall />}>New meeting</ButtonWithIcon>
@@ -58,7 +58,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className="w-full max-w-[38rem] mx-auto border-b-[1px] border-b-[#747775] self-stretch mt-8 mb-20" />
+        <div className="w-full max-w-xl mx-auto border-b border-b-border-gray self-stretch mt-8 mb-20" />
         <div className="flex flex-col items-center justify-center gap-8">
           <Image
             src="https://www.gstatic.com/meet/user_edu_get_a_link_light_90698cd7b4ca04d3005c962a3756c42d.svg"
@@ -66,20 +66,20 @@ const Home = () => {
             width={248}
             height={248}
           />
-          <div className="flex flex-col gap-2 text-center max-w-[362px]">
-            <h2 className="text-[1.5rem] leading-[2rem] tracking-normal text-[#000000DE]">
+          <div className="flex flex-col gap-2 text-center max-w-sm">
+            <h2 className="text-2xl tracking-normal text-black">
               Get a link you can share
             </h2>
-            <p className="font-[Roboto] text-[.875rem] leading-[1.25rem] text-[#000000DE] pb-[2rem] grow">
+            <p className="font-roboto text-sm text-black pb-8 grow">
               Click <span className="font-bold">New meeting</span> to get a link
               you can send to people you want to meet with
             </p>
           </div>
         </div>
-        <footer className="w-full max-w-[38rem] mt-20 pb-4 text-start">
-          <div className="text-[.75rem] leading-[1rem] text-[#444746] tracking-[.006rem]">
+        <footer className="w-full max-w-xl mt-20 pb-4 text-start">
+          <div className="text-xs text-gray tracking-wider">
             <span className="cursor-pointer">
-              <a className="text-[#0b57d0] hover:underline" href="#">
+              <a className="text-meet-blue hover:underline" href="#">
                 Learn more
               </a>{' '}
               about Moogle Meet

@@ -116,17 +116,19 @@ const useAnimateGrid = () => {
           // animate video cover when there are 3 participants or less
           if (
             items.length < 3 ||
-            (items.length === 3 && prevPosition.total === 2)
+            (items.length === 3 && prevPosition.total === 2) ||
+            (items.length === 4 && prevPosition.total === 5) ||
+            (items.length === 5 && prevPosition.total === 4)
           ) {
             if (video) {
               gsap.fromTo(
                 item.querySelector(`.${menuOverlayClassName}`),
                 {
-                  background: '#202124',
+                  background: 'var(--meet-black)',
                   opacity: 1,
                   outlineWidth: 2,
                   outlineStyle: 'solid',
-                  outlineColor: '#202124',
+                  outlineColor: 'var(--meet-black)',
                   ...(items.length === 1 && {
                     borderRadius: '0px',
                   }),

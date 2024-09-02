@@ -48,7 +48,7 @@ const Avatar = ({ text = '', width, participant = {} }: AvatarProps) => {
   if (image)
     return (
       <Image
-        className="w-[160px] h-[160px] rounded-full overflow-hidden"
+        className="w-40 h-40 rounded-full overflow-hidden"
         src={image}
         alt={name}
         width={160}
@@ -60,13 +60,15 @@ const Avatar = ({ text = '', width, participant = {} }: AvatarProps) => {
     <div
       style={{
         backgroundColor: randomColor,
+        width: width ? width : '30%',
       }}
       className={clsx(
-        width ? `w-[${width}px]` : 'w-[30%] max-w-[10rem]',
-        `aspect-square rounded-full uppercase text-white font-[sans-serif] font-medium flex items-center justify-center ${avatarClassName}`
+        !width && 'max-w-40',
+        'aspect-square rounded-full uppercase text-white font-sans-serif font-medium flex items-center justify-center',
+        avatarClassName
       )}
     >
-      <span className={clsx(text ? 'text-[.75rem]' : 'text-[1rem]')}>
+      <span className={clsx(text ? 'text-xs' : 'text-base')}>
         {text ? text : name[0]}
       </span>
     </div>

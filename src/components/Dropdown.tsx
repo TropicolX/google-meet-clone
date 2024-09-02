@@ -1,32 +1,8 @@
-import {
-  MutableRefObject,
-  ReactNode,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { MutableRefObject, ReactNode, useState } from 'react';
+import clsx from 'clsx';
 
 import ArrowDropdown from './icons/ArrowDropdown';
-
-let useClickOutside = (handler: () => void) => {
-  let domNode = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    let maybeHandler = (event: MouseEvent) => {
-      if (!domNode.current!.contains(event.target as Node)) {
-        handler();
-      }
-    };
-
-    document.addEventListener('mousedown', maybeHandler);
-
-    return () => {
-      document.removeEventListener('mousedown', maybeHandler);
-    };
-  });
-
-  return domNode;
-};
+import useClickOutside from '../hooks/useClickOutside';
 
 interface DropdownProps {
   icon?: ReactNode;
@@ -39,6 +15,8 @@ interface DropdownProps {
     onClick?: () => void;
   }[];
   disabled?: boolean;
+  className?: string;
+  dark?: boolean;
 }
 const Dropdown = ({
   label,
@@ -47,48 +25,65 @@ const Dropdown = ({
   options,
   value,
   disabled = false,
+  className,
+  dark = false,
 }: DropdownProps) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  let domNode = useClickOutside(() => {
+  const domNode = useClickOutside(() => {
     setDropdownOpen(false);
-  }) as unknown as MutableRefObject<HTMLDivElement>;
+  }) as MutableRefObject<HTMLDivElement>;
+
+  const toggleDropdown = () => {
+    setDropdownOpen((prev) => !prev);
+  };
 
   return (
-    <div className="flex flex-wrap -mx-4">
+    <div className="flex flex-wrap -mx-4 select-none">
       <div ref={domNode} className="w-full px-4 sm:w-1/2 lg:w-1/4">
         <div className="pb-8 text-center">
           <div className="relative inline-block text-left">
             <button
-              onClick={() => setDropdownOpen(!dropdownOpen)}
-              className="w-[168px] h-[36px] rounded-full bg-transparent flex items-center px-2.5 text-[#5f6368] hover:text-[#202124] hover:bg-[rgba(26,115,232,.04)] transition-[background-color] duration-[15ms] ease-linear [&:hover_svg]:fill-[#202124] [&_svg]:disabled:fill-[#5f6368] text-[14px] font-medium border border-transparent hover:border-[#dadce0] disabled:border-[#dadce0] disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-[#5f6368]"
+              onClick={toggleDropdown}
+              className={clsx(
+                'w-42 h-9 rounded-full text-sm font-medium flex items-center px-2.5 transition-colors duration-15 ease-linear [&_svg]:disabled:fill-meet-gray border disabled:border-hairline-gray disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-meet-gray',
+                dark
+                  ? 'text-white [&_svg]:fill-icon-blue border-meet-gray hover:border-meet-gray hover:bg-[#303134] hover:text-white [&:hover_svg]:fill-icon-hover-blue [&>div]:bg-[#303134]'
+                  : 'bg-transparent text-meet-gray hover:text-meet-black hover:bg-[rgba(26,115,232,.04)] [&:hover_svg]:fill-meet-black border-transparent hover:border-hairline-gray',
+                className
+              )}
               disabled={disabled}
             >
-              {icon && (
-                <span className="mr-[6px] [&_svg]:fill-[#5f6368] [&_svg]:w-[20px] [&_svg]:h-[20px]">
-                  {icon}
-                </span>
-              )}
-              <span className="max-w-[130px] truncate">{label}</span>
+              {icon && <span className="mr-2">{icon}</span>}
+              <span className="text-start grow max-w-32.5 sm:max-w-full truncate">
+                {label}
+              </span>
               <span>
                 <ArrowDropdown />
               </span>
             </button>
             <div
-              className={`shadow-xl absolute left-0 z-40 mt-2 w-[295px] rounded-md bg-white py-[10px] transition-all ${
-                dropdownOpen
-                  ? 'bottom-full opacity-100 visible'
-                  : 'bottom-[110%] invisible opacity-0'
-              }`}
+              className={clsx(
+                'absolute left-0 z-40 mt-2 w-[18.4375rem] rounded-md py-2.5 transition-all',
+                dropdownOpen ? 'opacity-100 visible' : 'invisible opacity-0',
+                dark
+                  ? 'bg-[#303134] rounded-xl bottom-[calc(100%+10px)] shadow-dark'
+                  : 'bg-white shadow-xl bottom-full',
+                className
+              )}
             >
               {options?.map((option) => {
                 const selected = value === option.value;
                 return (
                   <div
                     key={option.value}
-                    className={`option cursor-pointer select-none hover:bg-[#F5F7FD] hover:text-primary block px-5 py-2 text-base ${
-                      selected ? 'text-[#1a73e8]' : ''
-                    }`}
+                    className={clsx(
+                      'option cursor-pointer select-none block px-5 py-2 text-base',
+                      selected && (dark ? 'text-icon-blue' : 'text-primary'),
+                      dark
+                        ? 'hover:bg-[#37383b]'
+                        : 'hover:bg-[#F5F7FD] hover:text-primary'
+                    )}
                     onClick={() => {
                       onChange(option.value);
                       setDropdownOpen(false);

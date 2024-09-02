@@ -57,10 +57,10 @@ const MeetingPopup = () => {
       onClose={onClose}
       title={<h2>Your meeting&apos;s ready</h2>}
     >
-      <div className="p-[0px_24px_24px_24px]">
+      <div className="p-6 pt-0">
         <ButtonWithIcon
           icon={
-            <div className="w-[26px] flex items-center justify-start">
+            <div className="w-6.5 flex items-center justify-start">
               <PersonAdd />
             </div>
           }
@@ -70,7 +70,7 @@ const MeetingPopup = () => {
         >
           Add others
         </ButtonWithIcon>
-        <div className="mt-2 text-[#3c4043] text-sm font-[Roboto] tracking-[.0142857143rem]">
+        <div className="mt-2 text-dark-gray text-sm font-roboto tracking-looserst">
           Or share this meeting link with others you want in the meeting
         </div>
         <div className="mt-2">
@@ -83,12 +83,12 @@ const MeetingPopup = () => {
             alt="Your meeting is safe"
             src="https://www.gstatic.com/meet/security_shield_with_background_2f8144e462c57b3e56354926e0cda615.svg"
           />
-          <div className="text-xs font-[Roboto] text-[#5f6368] tracking-[.025rem]">
+          <div className="text-xs font-roboto text-meet-gray tracking-wide">
             People who use this meeting link must get your permission before
             they can join.
           </div>
         </div>
-        <div className="text-xs font-[Roboto] text-[#5f6368] tracking-[.025rem]">
+        <div className="text-xs font-roboto text-meet-gray tracking-wide">
           Joined as {email}
         </div>
       </div>

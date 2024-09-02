@@ -24,7 +24,7 @@ const VideoPlaceholder = forwardRef<HTMLDivElement, VideoPlaceholderProps>(
       <div
         ref={ref}
         style={style}
-        className={`absolute w-full h-full rounded-[inherit] bg-[#3c4043] flex items-center justify-center ${placeholderClassName}`}
+        className={`absolute w-full h-full rounded-[inherit] bg-dark-gray flex items-center justify-center ${placeholderClassName}`}
       >
         {participant.image && (
           <Image
@@ -41,7 +41,7 @@ const VideoPlaceholder = forwardRef<HTMLDivElement, VideoPlaceholderProps>(
           }}
           className={clsx(
             participant.image && 'hidden',
-            'relative avatar w-[30%] max-w-[10rem] aspect-square uppercase rounded-full text-white font-[sans-serif] font-medium flex items-center justify-center'
+            'relative avatar w-3/10 max-w-40 aspect-square uppercase rounded-full text-white font-sans-serif font-medium flex items-center justify-center'
           )}
         >
           <span className="mt-1 text-[clamp(16px,_calc(100vw_*_0.05),_85px)]">

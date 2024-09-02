@@ -1,6 +1,6 @@
 const Spinner = () => {
   return (
-    <div className="relative w-[37px] h-[37px] before:relative before:content-[''] before:block before:pt-[100%]">
+    <div className="relative w-9.5 h-9.5 before:relative before:content-none before:block before:pt-full">
       <svg
         className="absolute left-0 top-0 animate-rotate w-full h-full origin-center"
         viewBox="25 25 50 50"

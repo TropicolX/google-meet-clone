@@ -3,12 +3,14 @@ import clsx from 'clsx';
 
 import Exclamation from './icons/Exclamation';
 
-interface IconButtonProps {
+export interface IconButtonProps {
   icon: ReactNode;
   onClick?: () => void;
   active?: boolean;
   variant?: 'primary' | 'secondary';
   alert?: boolean;
+  title?: string;
+  className?: string;
 }
 
 const IconButton = ({
@@ -17,9 +19,11 @@ const IconButton = ({
   icon,
   onClick,
   variant = 'primary',
+  title,
+  className,
 }: IconButtonProps) => {
   const alertIcon = (
-    <div className="absolute top-[-5px] right-0 w-[24px] h-[24px] bg-[#fa7b17] rounded-full flex items-center justify-center">
+    <div className="absolute -top-[5px] right-0 w-6 h-6 bg-meet-orange rounded-full flex items-center justify-center">
       <Exclamation />
     </div>
   );
@@ -28,7 +32,11 @@ const IconButton = ({
     return (
       <button
         onClick={onClick}
-        className="relative h-[36px] w-[36px] mx-2.5 rounded-full inline-flex items-center justify-center text-center text-base font-medium hover:bg-[#f6f6f6] hover:text-[#174ea6] disabled:bg-transparent disabled:text-[#3c404361] [&_svg]:fill-[#5f6368]"
+        title={title}
+        className={clsx(
+          'relative h-9 w-9 mx-2.5 rounded-full inline-flex items-center justify-center text-center text-base font-medium hover:bg-[#f6f6f6] disabled:bg-transparent disabled:text-[#3c404361] [&_svg]:fill-meet-gray',
+          className
+        )}
       >
         {icon}
         {alert && alertIcon}
@@ -38,14 +46,16 @@ const IconButton = ({
     return (
       <button
         onClick={onClick}
+        title={title}
         style={{
           WebkitMaskImage: 'none',
         }}
         className={clsx(
-          'relative h-[56px] w-[56px] rounded-full inline-flex items-center justify-center text-center text-base font-medium  border border-solid transition-all ease-linear duration-[250ms] hover:transition-none hover:shadow-[0_1px_3px_0_rgba(60,64,67,.3),0_4px_8px_3px_rgba(60,64,67,.15)] disabled:bg-transparent disabled:text-[#3c404361] [&_svg]:fill-[white]',
+          'relative h-14 w-14 rounded-full inline-flex items-center justify-center text-center text-base font-medium border border-solid transition-all ease-linear duration-250 hover:transition-none disabled:bg-transparent disabled:text-[#3c404361] [&_svg]:fill-white',
           active
-            ? 'bg-[#ea4335] border-[#ea4335] hover:bg-[#ea4335] hover:opacity-90 transition-none'
-            : 'hover:bg-[rgba(255,255,255,.4)] border-[white]'
+            ? 'bg-meet-red border-meet-red hover:bg-hover-red hover:border-hover-red transition-none'
+            : 'hover:bg-[rgba(255,255,255,.4)] border-white',
+          className
         )}
       >
         {icon}

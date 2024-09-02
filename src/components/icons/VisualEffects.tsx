@@ -1,10 +1,20 @@
 import React from 'react';
 
-interface VisualEffectsProps {}
+interface VisualEffectsProps {
+  width?: number;
+  height?: number;
+}
 
-const VisualEffects = ({}: VisualEffectsProps) => {
+const VisualEffects = ({ width = 24, height = 24 }: VisualEffectsProps) => {
   return (
-    <i aria-hidden="true" className="google-symbols">
+    <i
+      style={{
+        fontSize: `${width}px`,
+        lineHeight: `${height}px`,
+      }}
+      aria-hidden="true"
+      className="google-symbols"
+    >
       visual_effects
     </i>
   );

@@ -9,11 +9,11 @@ import {
   useConnectedUser,
 } from '@stream-io/video-react-sdk';
 
-import Button from '../../components/Button';
-import CallParticipants from '../../components/CallParticipants';
-import Header from '../../components/Header';
-import MeetingPreview from '../../components/MeetingPreview';
-import Spinner from '../../components/Spinner';
+import Button from '@/components/Button';
+import CallParticipants from '@/components/CallParticipants';
+import Header from '@/components/Header';
+import MeetingPreview from '@/components/MeetingPreview';
+import Spinner from '@/components/Spinner';
 
 interface LobbyProps {
   params: {
@@ -57,6 +57,7 @@ const Lobby = ({ params }: LobbyProps) => {
       setLoading(false);
     };
 
+    console.log(joining);
     leavePreviousCall();
     !joining && getCurrentCall();
   }, [call, connectedUser, callingState, joining]);
@@ -92,23 +93,27 @@ const Lobby = ({ params }: LobbyProps) => {
   return (
     <div>
       <Header navItems={false} />
-      <main className="min-[1000px]:h-[calc(100svh-80px)] p-4 mt-3 flex flex-col min-[1000px]:flex-row items-center justify-center gap-8 min-[1000px]:gap-0">
+      <main className="lg:h-[calc(100svh-80px)] p-4 mt-3 flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-0">
         <MeetingPreview />
-        <div className="flex flex-col items-center min-[1000px]:justify-center gap-4 flex-[0_0_448px] h-[540px] mr-2 min-[1000px]:mb-[52px]">
-          <h2 className="text-[#000000DE] text-[1.75rem] leading-[2.25rem] text-center truncate">
+        <div className="flex flex-col items-center lg:justify-center gap-4 grow-0 shrink-0 basis-112 h-135 mr-2 lg:mb-13">
+          <h2 className="text-black text-3xl text-center truncate">
             {heading}
           </h2>
-          <span className="text-[#202124] font-medium text-center text-[0.875rem] leading-[1.25rem] cursor-default">
+          <span className="text-meet-black font-medium text-center text-sm cursor-default">
             {participantsUI}
           </span>
-          <div className="[&>button]:w-[240px]">
+          <div>
             {!joining && !loading && (
-              <Button onClick={joinCall} rounding="lg">
+              <Button
+                className="w-60 text-sm !bg-meet-blue !border-meet-blue hover:!bg-primary"
+                onClick={joinCall}
+                rounding="lg"
+              >
                 Join now
               </Button>
             )}
             {(joining || loading) && (
-              <div className="h-[56px] pb-[9.5px]">
+              <div className="h-14 pb-2.5">
                 <Spinner />
               </div>
             )}

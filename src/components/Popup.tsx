@@ -7,7 +7,7 @@ interface PopupProps {
   className?: string;
   children: ReactNode;
   height?: number;
-  title: ReactNode;
+  title?: ReactNode;
   onClose?: () => void;
   open?: boolean;
 }
@@ -29,23 +29,25 @@ const Popup = forwardRef<HTMLDivElement | null, PopupProps>(function Popup(
       ref={ref}
       className={clsx(
         `h-[${height}px]`,
-        'z-[1] bg-white absolute top-auto bottom-0 left-[32px] max-w-[22.5rem] w-[clamp(280px,_22.5rem)] animate-popup translate-y-[-90px] rounded-lg shadow-[0_1px_2px_0_rgba(60,_64,_67,_.3),_0_2px_6px_2px_rgba(60,_64,_67,_.15)]',
+        'z-1 bg-white absolute top-auto bottom-0 left-8 max-w-90 w-70 sm:w-90 animate-popup -translate-y-22.5 rounded-lg shadow-[0_1px_2px_0_rgba(60,_64,_67,_.3),_0_2px_6px_2px_rgba(60,_64,_67,_.15)]',
         className
       )}
     >
-      <div className="flex items-center text-[#202124] p-[12px_12px_0px_24px]">
-        <div className="text-[1.125rem] leading-[1.5rem] grow my-[15px] tracking-normal">
-          {title}
-        </div>
-        <button
-          onClick={closePopup}
-          className="bg-transparent outline-none hover:bg-[#0000000a] rounded-full"
-        >
-          <div className="w-[48px] h-[48px] p-3">
-            <Close />
+      {title && (
+        <div className="flex items-center text-meet-black pt-3 pl-6 pb-0 pr-3">
+          <div className="text-lg leading-6 grow my-[15px] tracking-normal">
+            {title}
           </div>
-        </button>
-      </div>
+          <button
+            onClick={closePopup}
+            className="bg-transparent hover:bg-[#0000000a] rounded-full"
+          >
+            <div className="w-12 h-12 p-3">
+              <Close />
+            </div>
+          </button>
+        </div>
+      )}
       {children}
     </div>
   );

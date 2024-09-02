@@ -74,7 +74,7 @@ const ParticipantViewUI = () => {
     <>
       <ParticipantDetails />
       {hasAudioTrack && (
-        <div className="absolute top-[.875rem] right-[.875rem] w-[26px] h-[26px] flex items-center justify-center bg-[#1a73e8] rounded-full">
+        <div className="absolute top-3.5 right-3.5 w-6.5 h-6.5 flex items-center justify-center bg-primary rounded-full">
           <SpeechIndicator
             isSpeaking={isSpeaking}
             isDominantSpeaker={isDominantSpeaker}
@@ -82,15 +82,17 @@ const ParticipantViewUI = () => {
         </div>
       )}
       {!hasAudioTrack && (
-        <div className="absolute top-[.875rem] right-[.875rem] w-[26px] h-[26px] flex items-center justify-center bg-[#2021244d] rounded-full">
+        <div className="absolute top-3.5 right-3.5 w-6.5 h-6.5 flex items-center justify-center bg-[#2021244d] rounded-full">
           <MicOffFilled width={18} height={18} />
         </div>
       )}
       {/* Speech Ring */}
       <div
         className={clsx(
-          isSpeaking && hasAudioTrack && 'ring-[5px] ring-inset ring-[#659df6]',
-          `absolute left-0 top-0 w-full h-full rounded-[12px] ${speechRingClassName}`
+          isSpeaking &&
+            hasAudioTrack &&
+            'ring-[5px] ring-inset ring-light-blue',
+          `absolute left-0 top-0 w-full h-full rounded-xl ${speechRingClassName}`
         )}
       />
       {/* Menu Overlay */}
@@ -99,14 +101,14 @@ const ParticipantViewUI = () => {
           setShowMenu(true);
         }}
         onMouseOut={() => setShowMenu(false)}
-        className={`absolute z-[1] left-0 top-0 w-full h-full rounded-[12px] bg-transparent ${menuOverlayClassName}`}
+        className={`absolute z-1 left-0 top-0 w-full h-full rounded-xl bg-transparent ${menuOverlayClassName}`}
       />
       {/* Menu */}
       <div
         className={clsx(
           showMenu ? 'opacity-60' : 'opacity-0',
-          'absolute left-[calc(50%-66px)] top-[calc(50%-22px)] flex items-center justify-center z-[1] h-[44px] transition-opacity duration-[.3s] ease-linear overflow-hidden',
-          'shadow-[0_1px_2px_0px_rgba(0,0,0,0.3),_0_1px_3px_1px_rgba(0,0,0,.15)] bg-[#202124] rounded-[44px] h-[44px] hover:opacity-90'
+          'absolute left-[calc(50%-66px)] top-[calc(50%-22px)] flex items-center justify-center z-1 h-11 transition-opacity duration-300 ease-linear overflow-hidden',
+          'shadow-[0_1px_2px_0px_rgba(0,0,0,0.3),_0_1px_3px_1px_rgba(0,0,0,.15)] bg-meet-black rounded-full h-11 hover:opacity-90'
         )}
       >
         <div className="[&_ul>*:nth-child(n+4)]:hidden">
@@ -146,7 +148,7 @@ const ParticipantDetails = ({}: Pick<
 
   return (
     <>
-      <div className="z-[1] absolute truncate font-medium leading-[1.25rem] cursor-default select-none left-0 bottom-[.65rem] flex items-center justify-start gap-4 max-w-[23.5rem] h-fit text-white text-[.875rem] m-[.375rem_1rem_0rem]">
+      <div className="z-1 absolute left-0 bottom-[.65rem] max-w-94 h-fit truncate font-medium text-white text-sm flex items-center justify-start gap-4 mt-1.5 mx-4 mb-0 cursor-default select-none">
         {pinned && (pin.isLocalPin ? <KeepFilled /> : <KeepPublicFilled />)}
         <span
           style={{
@@ -180,7 +182,7 @@ const Button = forwardRef(function Button(
       }}
       {...rest}
       ref={ref}
-      className="h-[44px] w-[44px] rounded-full p-2.5 bg-transparent border-transparent outline-none hover:bg-[rgba(232,234,237,.15)] transition-[background] duration-[.15s] ease-linear"
+      className="h-11 w-11 rounded-full p-2.5 bg-transparent border-transparent outline-none hover:bg-[rgba(232,234,237,.15)] transition-[background] duration-150 ease-linear"
     >
       {icon}
     </button>
