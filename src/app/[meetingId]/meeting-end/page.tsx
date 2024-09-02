@@ -81,7 +81,7 @@ const MeetingEnd = ({ params }: MeetingEndProps) => {
           Returning to home screen
         </span>
       </div>
-      <div className="mt-6 flex flex-col items-center gap-8">
+      <div className="mt-6 px-4 flex flex-col items-center gap-8">
         <h1 className="text-4xl leading-[2.75rem] font-normal text-dark-gray tracking-normal">
           You left the meeting
         </h1>
@@ -100,7 +100,7 @@ const MeetingEnd = ({ params }: MeetingEndProps) => {
           </div>
           <PlainButton size="sm">Submit feedback</PlainButton>
         </div>
-        <div className="w-100 flex flex-wrap flex-col rounded items-center pl-4 pr-3 pt-4 pb-1 border border-hairline-gray text-left">
+        <div className="max-w-100 flex flex-wrap flex-col rounded items-center pl-4 pr-3 pt-4 pb-1 border border-hairline-gray text-left">
           <div className="flex items-center">
             <Image
               alt="Your meeting is safe"
