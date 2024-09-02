@@ -61,6 +61,10 @@
     position: relative;
   }
 
+  .root-theme .str-video__paginated-grid-layout .str-video__paginated-grid-layout__group:has(> .str-video__participant-view:first-child:nth-last-child(2)) {
+    @apply flex-col min-[500px]:flex-row;
+  }
+
   .root-theme .str-video__paginated-grid-layout__wrapper {
     height: 100%;
   }
@@ -113,10 +117,6 @@
 
   .root-theme .str-video__paginated-grid-layout--two-four .str-video__participant-view {
     max-height: calc(calc(100svh - 6rem) / 2 - 6px);
-  }
-
-  .root-theme .str-video__paginated-grid-layout .str-video__paginated-grid-layout__group .str-video__participant-view {
-    flex: 0 1 calc(25svh - 6rem);
   }
 
   .root-theme .str-video__menu-container {

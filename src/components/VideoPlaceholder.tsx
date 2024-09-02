@@ -44,7 +44,7 @@ const VideoPlaceholder = forwardRef<HTMLDivElement, VideoPlaceholderProps>(
             'relative avatar w-3/10 max-w-40 aspect-square uppercase rounded-full text-white font-sans-serif font-medium flex items-center justify-center'
           )}
         >
-          <span className="mt-1 text-[clamp(16px,_calc(100vw_*_0.05),_85px)]">
+          <span className="mt-1 text-[clamp(40px,_calc(100vw_*_0.05),_85px)]">
             {name[0]}
           </span>
         </div>

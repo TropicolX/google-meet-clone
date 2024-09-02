@@ -66,7 +66,11 @@ const Meeting = ({ params }: MeetingProps) => {
     router.push(`/${meetingId}/meeting-end`);
   };
 
-  if (callingState !== CallingState.JOINED) return null;
+  if (
+    callingState === CallingState.UNKNOWN ||
+    callingState === CallingState.IDLE
+  )
+    return null;
 
   return (
     <StreamTheme className="root-theme">
