@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
 import Button from '@/components/Button';
 import PlainButton from '@/components/PlainButton';
@@ -11,18 +11,22 @@ interface MeetingEndProps {
   params: {
     meetingId: string;
   };
+  searchParams?: {
+    invalid: string;
+  };
 }
 
-const MeetingEnd = ({ params }: MeetingEndProps) => {
+const MeetingEnd = ({ params, searchParams }: MeetingEndProps) => {
   const { meetingId } = params;
   const router = useRouter();
-  const audioRef = useRef<HTMLAudioElement>(null);
-  const [countdownNumber, setCountdownNumber] = useState(60);
   const { useCallCallingState } = useCallStateHooks();
   const callingState = useCallCallingState();
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [countdownNumber, setCountdownNumber] = useState(60);
+  const invalidMeeting = searchParams?.invalid === 'true';
 
   useEffect(() => {
-    if (callingState !== CallingState.LEFT) {
+    if (!invalidMeeting && callingState !== CallingState.LEFT) {
       router.push(`/`);
     }
     audioRef.current?.play();
@@ -49,7 +53,7 @@ const MeetingEnd = ({ params }: MeetingEndProps) => {
     router.push('/');
   };
 
-  if (callingState !== CallingState.LEFT) return null;
+  if (!invalidMeeting && callingState !== CallingState.LEFT) return null;
 
   return (
     <div className="w-full">
@@ -83,17 +87,34 @@ const MeetingEnd = ({ params }: MeetingEndProps) => {
       </div>
       <div className="mt-6 px-4 flex flex-col items-center gap-8">
         <h1 className="text-4xl leading-[2.75rem] font-normal text-dark-gray tracking-normal">
-          You left the meeting
+          {invalidMeeting ? 'Check your meeting code' : 'You left the meeting'}
         </h1>
+        {invalidMeeting && (
+          <div className="font-roboto text-base text-meet-gray text-center">
+            <p>
+              Make sure you entered the correct meeting code in the URL, for
+              example:{' '}
+            </p>
+            <p>
+              https://{window.location.host}/
+              <span className="font-extrabold">xxx-yyyy-zzz</span>
+              <a href="#" className="ml-2 text-primary">
+                Learn more
+              </a>
+            </p>
+          </div>
+        )}
         <div className="flex flex-col items-center justify-center gap-3">
           <div className="flex items-center justify-center gap-2">
-            <PlainButton
-              size="sm"
-              className="border border-hairline-gray px-[23px] shadow-[border_.28s_cubic-bezier(.4,0,.2,1),box-shadow_.28s_cubic-bezier(.4,0,.2,1)]"
-              onClick={rejoinMeeting}
-            >
-              Rejoin
-            </PlainButton>
+            {!invalidMeeting && (
+              <PlainButton
+                size="sm"
+                className="border border-hairline-gray px-[23px] shadow-[border_.28s_cubic-bezier(.4,0,.2,1),box-shadow_.28s_cubic-bezier(.4,0,.2,1)]"
+                onClick={rejoinMeeting}
+              >
+                Rejoin
+              </PlainButton>
+            )}
             <Button size="sm" onClick={returnHome}>
               Return to home screen
             </Button>

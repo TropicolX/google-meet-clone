@@ -1,16 +1,20 @@
+import { createContext, useEffect, useState } from 'react';
+import { useUser } from '@clerk/nextjs';
 import {
   Call,
   StreamCall,
   StreamVideo,
   StreamVideoClient,
+  User,
 } from '@stream-io/video-react-sdk';
-import { createContext, useState } from 'react';
+import LoadingOverlay from '../components/LoadingOverlay';
 
 type MeetContextType = {
   client: StreamVideoClient | undefined;
   setClient: (client: StreamVideoClient) => void;
   call: Call | undefined;
   setCall: (call: Call | undefined) => void;
+  user: User | undefined;
 };
 
 type MeetProviderProps = {
@@ -23,34 +27,68 @@ const initialContext: MeetContextType = {
   call: undefined,
   setClient: () => {},
   setCall: () => {},
+  user: undefined,
 };
 
 export const MeetContext = createContext<MeetContextType>(initialContext);
-
-const apiKey = process.env.NEXT_PUBLIC_STREAM_API_KEY as string;
-const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoidXNlciJ9.HgrSSLZbSd95N0CflhNQ5LxAyrTtxi0zu4r-PePIKpg';
-const token2 =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoidXNlcjEifQ.IetiVuMVjDO5uXVqNSfxQb06ztTEXF3PQalqWlULBSU';
+export const callType = 'default';
+export const apiKey = process.env.NEXT_PUBLIC_STREAM_API_KEY as string;
 
 const MeetProvider = ({ meetingId, children }: MeetProviderProps) => {
-  const user = { id: 'user1' };
-  const [client, setClient] = useState<StreamVideoClient>(
-    new StreamVideoClient({ apiKey, user, token: token2 })
-  );
-  const [call, setCall] = useState<Call | undefined>(
-    client.call('default', meetingId)
-  );
+  const [loading, setLoading] = useState(true);
+  const { user: clerkUser, isSignedIn, isLoaded } = useUser();
+  const [user, setUser] = useState<User>();
+  const [client, setClient] = useState<StreamVideoClient>();
+  const [call, setCall] = useState<Call>();
 
-  // useEffect(() => {
-  //   return () => {
-  //     client.disconnectUser();
+  useEffect(() => {
+    if (!isLoaded) return;
 
-  //     if (call?.state.callingState !== CallingState.LEFT) {
-  //       call?.leave();
-  //     }
-  //   };
-  // }, [client, call, meetingId]);
+    const tokenProvider = async () => {
+      const response = await fetch('/api/token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId: clerkUser?.id }),
+      });
+      const data = await response.json();
+      return data.token;
+    };
+
+    let user: User;
+
+    if (isSignedIn) {
+      user = {
+        id: clerkUser.id,
+        name: clerkUser.fullName!,
+        image: clerkUser.hasImage ? clerkUser.imageUrl : undefined,
+        custom: {
+          username: clerkUser?.username,
+        },
+      };
+    } else {
+      user = {
+        id: 'guest',
+        type: 'guest',
+        name: 'Guest',
+      };
+    }
+
+    const myClient = new StreamVideoClient({ apiKey, user, tokenProvider });
+    const call = myClient.call(callType, meetingId);
+    setUser(user);
+    setClient(myClient);
+    setCall(call);
+    setLoading(false);
+
+    return () => {
+      myClient.disconnectUser();
+      setClient(undefined);
+    };
+  }, [clerkUser, isLoaded, isSignedIn, loading, meetingId]);
+
+  if (loading) return <LoadingOverlay />;
 
   return (
     <MeetContext.Provider
@@ -59,9 +97,10 @@ const MeetProvider = ({ meetingId, children }: MeetProviderProps) => {
         setClient,
         call,
         setCall,
+        user,
       }}
     >
-      <StreamVideo client={client}>
+      <StreamVideo client={client!}>
         <StreamCall call={call}>{children}</StreamCall>
       </StreamVideo>
     </MeetContext.Provider>

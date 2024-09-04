@@ -1,9 +1,10 @@
 'use client';
-import { useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   CallingState,
   CallParticipantResponse,
+  ErrorFromResponse,
   useCall,
   useCallStateHooks,
   useConnectedUser,
@@ -14,6 +15,9 @@ import CallParticipants from '@/components/CallParticipants';
 import Header from '@/components/Header';
 import MeetingPreview from '@/components/MeetingPreview';
 import Spinner from '@/components/Spinner';
+import { AppContext } from '../../contexts/AppProvider';
+import { regex } from '../page';
+import { GetCallResponse } from '@stream-io/node-sdk';
 
 interface LobbyProps {
   params: {
@@ -23,11 +27,14 @@ interface LobbyProps {
 
 const Lobby = ({ params }: LobbyProps) => {
   const { meetingId } = params;
+  const validMeetingId = regex.test(meetingId);
+  const { newMeeting, setNewMeeting } = useContext(AppContext);
   const router = useRouter();
   const connectedUser = useConnectedUser();
   const call = useCall();
   const { useCallCallingState } = useCallStateHooks();
   const callingState = useCallCallingState();
+  const [errorFetchingMeeting, setErrorFetchingMeeting] = useState(false);
   const [loading, setLoading] = useState(true);
   const [joining, setJoining] = useState(false);
   const [participants, setParticipants] = useState<CallParticipantResponse[]>(
@@ -36,14 +43,26 @@ const Lobby = ({ params }: LobbyProps) => {
 
   useEffect(() => {
     const leavePreviousCall = async () => {
-      if (callingState === CallingState.JOINED && !joining) {
+      if (callingState === CallingState.JOINED) {
         await call?.leave();
       }
     };
 
     const getCurrentCall = async () => {
-      if (!(call && connectedUser)) return;
-      const callData = await call.getOrCreate({
+      try {
+        const callData = await call?.get();
+        setParticipants(callData?.call?.session?.participants || []);
+      } catch (e) {
+        const err = e as ErrorFromResponse<GetCallResponse>;
+        console.error(err.message);
+        setErrorFetchingMeeting(true);
+      }
+      setLoading(false);
+    };
+
+    const createCall = async () => {
+      if (!connectedUser) return;
+      await call?.create({
         data: {
           members: [
             {
@@ -53,13 +72,26 @@ const Lobby = ({ params }: LobbyProps) => {
           ],
         },
       });
-      setParticipants(callData.call.session?.participants || []);
       setLoading(false);
     };
 
-    leavePreviousCall();
-    !joining && getCurrentCall();
-  }, [call, connectedUser, callingState, joining]);
+    if (!joining && validMeetingId) {
+      leavePreviousCall();
+      if (newMeeting) {
+        createCall();
+      } else {
+        getCurrentCall();
+      }
+    }
+  }, [call, callingState, connectedUser, joining, newMeeting, validMeetingId]);
+
+  useEffect(() => {
+    setNewMeeting(newMeeting);
+
+    return () => {
+      setNewMeeting(false);
+    };
+  }, [newMeeting, setNewMeeting]);
 
   const heading = useMemo(() => {
     if (loading) return 'Getting ready...';
@@ -88,6 +120,25 @@ const Lobby = ({ params }: LobbyProps) => {
     }
     router.push(`/${meetingId}/meeting`);
   };
+
+  if (!validMeetingId)
+    return (
+      <div>
+        <Header />
+        <div className="w-full h-full flex flex-col items-center justify-center mt-[6.75rem]">
+          <h1 className="text-4xl leading-[2.75rem] font-normal text-dark-gray tracking-normal mb-12">
+            Invalid video call name.
+          </h1>
+          <Button size="sm" onClick={() => router.push('/')}>
+            Return to home screen
+          </Button>
+        </div>
+      </div>
+    );
+
+  if (errorFetchingMeeting) {
+    router.push(`/${meetingId}/meeting-end?invalid=true`);
+  }
 
   return (
     <div>

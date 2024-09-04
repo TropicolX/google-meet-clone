@@ -34,7 +34,7 @@ const IconButton = ({
         onClick={onClick}
         title={title}
         className={clsx(
-          'relative h-9 w-9 mx-2.5 rounded-full inline-flex items-center justify-center text-center text-base font-medium hover:bg-[#f6f6f6] disabled:bg-transparent disabled:text-[#3c404361] [&_svg]:fill-meet-gray',
+          'relative h-9 w-9 rounded-full inline-flex items-center justify-center text-center text-base font-medium hover:bg-[#f6f6f6] disabled:bg-transparent disabled:text-[#3c404361] [&_svg]:fill-meet-gray',
           className
         )}
       >

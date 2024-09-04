@@ -1,14 +1,36 @@
 'use client';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { SignInButton, useUser } from '@clerk/nextjs';
+import { customAlphabet } from 'nanoid';
+import {
+  ErrorFromResponse,
+  GetCallResponse,
+  StreamVideoClient,
+  User,
+} from '@stream-io/video-react-sdk';
 import Image from 'next/image';
+import clsx from 'clsx';
 
+import { apiKey, callType } from '@/contexts/MeetProvider';
 import Button from '@/components/Button';
 import ButtonWithIcon from '@/components/ButtonWithIcon';
 import Header from '@/components/Header';
 import PlainButton from '@/components/PlainButton';
 import TextField from '@/components/TextField';
 import Videocall from '@/components/icons/Videocall';
+import { AppContext } from '../contexts/AppProvider';
+
+const generateMeetingId = () => {
+  const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+  const nanoid = customAlphabet(alphabet, 4);
+
+  return `${nanoid(3)}-${nanoid(4)}-${nanoid(3)}`;
+};
+
+export const regex = /^[a-z]{3}-[a-z]{4}-[a-z]{3}$/;
+
+const guestUser: User = { id: 'guest', type: 'guest' };
 
 const Home = () => {
   // Features
@@ -19,14 +41,66 @@ const Home = () => {
   // - Screen sharing
   // - Chatting functionality
 
+  const { setNewMeeting } = useContext(AppContext);
+  const { isLoaded, isSignedIn } = useUser();
   const [code, setCode] = useState('');
+  const [checkingCode, setCheckingCode] = useState(false);
+  const [error, setError] = useState('');
   const router = useRouter();
-  const signedIn = true;
+
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+    if (error) {
+      timeout = setTimeout(() => {
+        setError('');
+      }, 3000);
+    }
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [error]);
+
+  const handleNewMeeting = () => {
+    setNewMeeting(true);
+    router.push(`/${generateMeetingId()}`);
+  };
+
+  const handleCode = async () => {
+    if (!regex.test(code)) return;
+    setCheckingCode(true);
+
+    const client = new StreamVideoClient({
+      apiKey,
+      user: guestUser,
+    });
+    const call = client.call(callType, code);
+
+    try {
+      const response: GetCallResponse = await call.get();
+      if (response.call) {
+        router.push(`/${code}`);
+        return;
+      }
+    } catch (e: unknown) {
+      let err = e as ErrorFromResponse<GetCallResponse>;
+      console.error(err.message);
+      if (err.status === 404) {
+        setError("Couldn't find the meeting you're trying to join.");
+      }
+    }
+
+    setCheckingCode(false);
+  };
 
   return (
     <div>
       <Header />
-      <main className="flex flex-col items-center justify-center px-6">
+      <main
+        className={clsx(
+          'flex flex-col items-center justify-center px-6',
+          isLoaded ? 'animate-fade-in' : 'opacity-0'
+        )}
+      >
         <div className="w-full max-w-2xl p-4 pt-7 text-center inline-flex flex-col items-center basis-auto shrink-0">
           <h1 className="text-5xl tracking-normal text-black pb-2">
             Video calls and meetings for everyone
@@ -37,10 +111,16 @@ const Home = () => {
         </div>
         <div className="w-full max-w-xl flex justify-center">
           <div className="flex flex-col items-start sm:flex-row gap-6 sm:gap-2 sm:items-center justify-center">
-            {signedIn && (
-              <ButtonWithIcon icon={<Videocall />}>New meeting</ButtonWithIcon>
+            {isSignedIn && (
+              <ButtonWithIcon onClick={handleNewMeeting} icon={<Videocall />}>
+                New meeting
+              </ButtonWithIcon>
             )}
-            {!signedIn && <Button size="sm">Sign in</Button>}
+            {!isSignedIn && (
+              <SignInButton>
+                <Button size="md">Sign in</Button>
+              </SignInButton>
+            )}
             <div className="flex items-center gap-2 sm:ml-4">
               <TextField
                 label="Code or link"
@@ -49,10 +129,7 @@ const Home = () => {
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
               />
-              <PlainButton
-                onClick={() => router.push(`/${code}`)}
-                disabled={!code}
-              >
+              <PlainButton onClick={handleCode} disabled={!code}>
                 Join
               </PlainButton>
             </div>
@@ -76,6 +153,18 @@ const Home = () => {
             </p>
           </div>
         </div>
+        {checkingCode && (
+          <div className="z-50 fixed top-0 left-0 w-full h-full flex items-center justify-center text-white text-3xl bg-[#000] animate-transition-overlay-fade-in">
+            Joining...
+          </div>
+        )}
+        {error && (
+          <div className="z-50 fixed bottom-0 left-0 pointer-events-none m-6 flex items-center justify-start">
+            <div className="rounded p-4 font-roboto text-white text-sm bg-dark-gray shadow-[0_3px_5px_-1px_rgba(0,0,0,.2),0_6px_10px_0_rgba(0,0,0,.14),0_1px_18px_0_rgba(0,0,0,.12)]">
+              {error}
+            </div>
+          </div>
+        )}
         <footer className="w-full max-w-xl mt-20 pb-4 text-start">
           <div className="text-xs text-gray tracking-wider">
             <span className="cursor-pointer">

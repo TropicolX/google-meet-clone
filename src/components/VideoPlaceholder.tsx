@@ -9,6 +9,7 @@ import clsx from 'clsx';
 import useUserColor from '../hooks/useUserColor';
 
 export const placeholderClassName = 'participant-view-placeholder';
+const width = 160;
 
 const VideoPlaceholder = forwardRef<HTMLDivElement, VideoPlaceholderProps>(
   function VideoPlaceholder({ style }, ref) {
@@ -31,8 +32,8 @@ const VideoPlaceholder = forwardRef<HTMLDivElement, VideoPlaceholderProps>(
             className="rounded-full overflow-hidden"
             src={participant.image}
             alt={participant.userId}
-            width={160}
-            height={160}
+            width={width}
+            height={width}
           />
         )}
         <div

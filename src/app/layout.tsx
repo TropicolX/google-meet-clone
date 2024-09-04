@@ -1,4 +1,7 @@
 import type { Metadata } from 'next';
+import { ClerkProvider } from '@clerk/nextjs';
+
+import AppProvider from '../contexts/AppProvider';
 
 import '@stream-io/video-react-sdk/dist/css/styles.css';
 import './globals.css';
@@ -15,8 +18,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
+    <AppProvider>
+      <ClerkProvider>
+        <html lang="en">
+          <body>{children}</body>
+        </html>
+      </ClerkProvider>
+    </AppProvider>
   );
 }

@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   CallingState,
@@ -22,7 +22,7 @@ import Mood from '@/components/icons/Mood';
 import ParticipantViewUI from '@/components/ParticipantViewUI';
 import PresentToAll from '@/components/icons/PresentToAll';
 import MeetingPopup from '@/components/MeetingPopup';
-import MoreVert from '../../../components/icons/MoreVert';
+import MoreVert from '@/components/icons/MoreVert';
 import ToggleAudioButton from '@/components/ToggleAudioButton';
 import ToggleVideoButton from '@/components/ToggleVideoButton';
 import VideoPlaceholder from '@/components/VideoPlaceholder';
@@ -35,16 +35,20 @@ interface MeetingProps {
   };
 }
 
+const groupSize = 6;
+
 const Meeting = ({ params }: MeetingProps) => {
   const { meetingId } = params;
-  const audioRef = useRef<HTMLAudioElement>(null);
   const router = useRouter();
   const call = useCall();
   const user = useConnectedUser();
   const { currentTime } = useTime();
   const { ref } = useAnimateGrid();
-  const { useCallCallingState } = useCallStateHooks();
+  const { useCallCallingState, useParticipants } = useCallStateHooks();
   const callingState = useCallCallingState();
+  const participants = useParticipants();
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [prevParticipantsCount, setPrevParticipantsCount] = useState(0);
   const isCreator = call?.state.createdBy?.id === user?.id;
 
   useEffect(() => {
@@ -54,12 +58,17 @@ const Meeting = ({ params }: MeetingProps) => {
         callingState === CallingState.IDLE
       ) {
         router.push(`/${meetingId}`);
-      } else {
-        await audioRef.current?.play();
       }
     };
     startup();
   }, [callingState, router, meetingId]);
+
+  useEffect(() => {
+    if (participants.length > prevParticipantsCount) {
+      audioRef.current?.play();
+      setPrevParticipantsCount(participants.length);
+    }
+  }, [participants.length, prevParticipantsCount]);
 
   const leaveCall = async () => {
     await call?.leave();
@@ -82,7 +91,7 @@ const Meeting = ({ params }: MeetingProps) => {
           <PaginatedGridLayout
             ParticipantViewUI={ParticipantViewUI}
             VideoPlaceholder={VideoPlaceholder}
-            groupSize={6}
+            groupSize={groupSize}
           />
         </div>
         <div className="absolute left-0 bottom-0 right-0 w-full h-20 bg-meet-black text-white text-center flex items-center justify-between">

@@ -135,7 +135,7 @@ const MeetingPreview = () => {
           </div>
         )}
         {/* User name */}
-        {hasCameraPermission && (
+        {devicesEnabled && hasCameraPermission && (
           <div className="z-3 max-w-94 h-8 absolute left-0 top-3 mt-1.5 mb-1 mx-4 truncate text-white text-sm font-medium leading-5 flex items-center justify-start cursor-default select-none">
             {user?.name}
           </div>

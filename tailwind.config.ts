@@ -111,7 +111,10 @@ const config: Config = {
         rotate: 'rotate 2s linear infinite',
         dash: 'dash 1.25s ease-in-out infinite',
         popup: 'popup 0.5s ease-in-out',
-        'fade-in': 'fade-in 0.75s cubic-bezier(.4,0,.2,1)',
+        'fade-in': '0.5s ease-in fade-in 0s forwards',
+        'delayed-fade-in': 'fade-in 0.75s cubic-bezier(.4,0,.2,1)',
+        'transition-overlay-fade-in':
+          'transition-overlay-fade-in 0.5s linear both',
         countdown: 'countdown 60s linear infinite forwards',
       },
       keyframes: {
@@ -129,8 +132,16 @@ const config: Config = {
         },
         'fade-in': {
           '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        'delayed-fade-in': {
+          '0%': { opacity: '0' },
           '66%': { opacity: '0' },
           '100%': { opacity: '1' },
+        },
+        'transition-overlay-fade-in': {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '0.9' },
         },
         countdown: {
           '0%': { strokeDashoffset: '0' },

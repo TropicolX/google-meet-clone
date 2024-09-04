@@ -88,7 +88,7 @@
   .root-theme .str-video__participant-view {
     max-width: 1294px;
     position: relative;
-    @apply animate-fade-in;
+    @apply animate-delayed-fade-in;
   }
 
   .root-theme .str-video__paginated-grid-layout--one .participant-view-placeholder {

@@ -68,9 +68,9 @@ const Avatar = ({ text = '', width, participant = {} }: AvatarProps) => {
         avatarClassName
       )}
     >
-      <span className={clsx(text ? 'text-xs' : 'text-base')}>
+      <div className={clsx(text ? 'text-xs' : 'text-base')}>
         {text ? text : name[0]}
-      </span>
+      </div>
     </div>
   );
 };

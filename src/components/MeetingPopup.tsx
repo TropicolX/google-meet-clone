@@ -17,8 +17,7 @@ const MeetingPopup = () => {
     [meetingId]: false,
   });
 
-  const email =
-    'jacobsbusayo@gmail.com' || user?.custom?.email || user?.name || user?.id;
+  const email = user?.custom?.email || user?.name || user?.id;
   const clipboardValue = window.location.href
     .replace('http://', '')
     .replace('https://', '')

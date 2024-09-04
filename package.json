@@ -12,14 +12,17 @@
     "@clerk/backend": "^1.6.2",
     "@clerk/nextjs": "^5.3.0",
     "@gsap/react": "^2.1.1",
+    "@stream-io/node-sdk": "^0.4.0",
     "@stream-io/video-react-sdk": "^1.2.20",
     "clsx": "^2.1.1",
     "gsap": "^3.12.5",
+    "nanoid": "^5.0.7",
     "next": "^15.0.0-rc.0",
     "react": "^19.0.0-rc-e56f4ae3-20240830",
     "react-dom": "^19.0.0-rc-e56f4ae3-20240830",
     "stream-chat": "^8.37.0",
-    "stream-chat-react": "^11.23.5"
+    "stream-chat-react": "^11.23.5",
+    "svix": "^1.32.0"
   },
   "devDependencies": {
     "@types/node": "^20",
