@@ -3,13 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "detect-port 3000 | xargs -I {} sh -c 'PORT={} && concurrently \"next dev -p $PORT\" \"ngrok http $PORT --domain=$(grep NGROK_DOMAIN .env.local | cut -d '=' -f2)\"'",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
-    "@clerk/backend": "^1.6.2",
     "@clerk/nextjs": "^5.3.0",
     "@gsap/react": "^2.1.1",
     "@stream-io/node-sdk": "^0.4.0",
@@ -28,6 +27,8 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "concurrently": "^8.2.2",
+    "detect-port": "^1.6.1",
     "eslint": "^8",
     "eslint-config-next": "^15.0.0-rc.0",
     "postcss": "^8",
