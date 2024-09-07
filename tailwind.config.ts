@@ -112,7 +112,7 @@ const config: Config = {
         dash: 'dash 1.25s ease-in-out infinite',
         popup: 'popup 0.5s ease-in-out',
         'fade-in': '0.5s ease-in fade-in 0s forwards',
-        'delayed-fade-in': 'fade-in 0.75s cubic-bezier(.4,0,.2,1)',
+        'delayed-fade-in': 'delayed-fade-in 0.75s cubic-bezier(.4,0,.2,1)',
         'transition-overlay-fade-in':
           'transition-overlay-fade-in 0.5s linear both',
         countdown: 'countdown 60s linear infinite forwards',

@@ -9,7 +9,7 @@ import clsx from 'clsx';
 import useUserColor from '../hooks/useUserColor';
 
 export const placeholderClassName = 'participant-view-placeholder';
-const width = 160;
+const WIDTH = 160;
 
 const VideoPlaceholder = forwardRef<HTMLDivElement, VideoPlaceholderProps>(
   function VideoPlaceholder({ style }, ref) {
@@ -32,8 +32,8 @@ const VideoPlaceholder = forwardRef<HTMLDivElement, VideoPlaceholderProps>(
             className="rounded-full overflow-hidden"
             src={participant.image}
             alt={participant.userId}
-            width={width}
-            height={width}
+            width={WIDTH}
+            height={WIDTH}
           />
         )}
         <div
@@ -45,7 +45,7 @@ const VideoPlaceholder = forwardRef<HTMLDivElement, VideoPlaceholderProps>(
             'relative avatar w-3/10 max-w-40 aspect-square uppercase rounded-full text-white font-sans-serif font-medium flex items-center justify-center'
           )}
         >
-          <span className="mt-1 text-[clamp(30px,_calc(100vw_*_0.05),_85px)]">
+          <span className="text-[clamp(30px,_calc(100vw_*_0.05),_65px)]">
             {name[0]}
           </span>
         </div>

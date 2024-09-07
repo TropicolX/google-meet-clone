@@ -53,7 +53,31 @@
     @apply !w-14;
   }
 
-  .root-theme .str-video__paginated-grid-layout .str-video__paginated-grid-layout__group {
+  .root-theme .str-video__paginated-grid-layout,
+  .root-theme .str-video__speaker-layout.str-video__speaker-layout--variant-bottom {
+    height: calc(100% - 5rem);
+    padding: 1rem 1rem 0 1rem;
+  }
+
+  .root-theme .str-video__speaker-layout__wrapper {
+    flex-grow: 0;
+  }
+
+  .root-theme .str-video__speaker-layout .str-video__speaker-layout__participants-bar-wrapper .str-video__speaker-layout__participants-bar .str-video__speaker-layout__participant-tile {
+    min-width: 350px;
+  }
+
+  .root-theme .str-video__speaker-layout__participants-bar-wrapper {
+    @apply min-[896px]:w-full;
+  }
+
+  .root-theme .str-video__speaker-layout__participants-bar {
+    scrollbar-width: none;
+    @apply overflow-y-hidden min-[896px]:flex min-[896px]:justify-center min-[896px]:items-center min-[896px]:w-full;
+  }
+
+  .root-theme .str-video__paginated-grid-layout .str-video__paginated-grid-layout__group,
+  .root-theme .spotlight {
     max-width: 1316px;
     max-height: calc(100svh - 6rem);
     padding: 0;
@@ -65,15 +89,9 @@
     @apply flex-col min-[500px]:flex-row;
   }
 
-  .root-theme .str-video__paginated-grid-layout__wrapper {
+  /* .root-theme .str-video__paginated-grid-layout__wrapper {
     height: 100%;
-  }
-
-  .root-theme .str-video__paginated-grid-layout--one .str-video__participant-view,
-  .root-theme .str-video__participant-view:first-child:nth-last-child(2),
-  .root-theme .str-video__participant-view:first-child:nth-last-child(2)~.str-video__participant-view {
-    max-height: calc(100svh - 6rem);
-  }
+  } */
 
   .root-theme .str-video__paginated-grid-layout--one .str-video__participant-view .str-video__menu-container,
   .root-theme .str-video__participant-view:first-child:nth-last-child(2) .str-video__menu-container,
@@ -81,8 +99,10 @@
     max-height: 380px !important;
   }
 
+  .root-theme .spotlight--one>.str-video__participant-view,
   .root-theme .str-video__paginated-grid-layout--one .str-video__participant-view {
     border-radius: 0;
+    max-height: calc(100svh - 6rem);
   }
 
   .root-theme .str-video__participant-view {
@@ -154,6 +174,14 @@
 
   .root-theme .str-video__generic-menu .str-video__generic-menu--item button:hover {
     background: #37383b;
+  }
+
+  .root-theme .str-video__speaker-layout__participants-bar-buttons-wrapper {
+    overflow: auto;
+  }
+
+  .root-theme .str-video__speaker-layout--variant-bottom .str-video__speaker-layout__participants-bar-wrapper {
+    overflow-x: auto;
   }
 
   .google-symbols {

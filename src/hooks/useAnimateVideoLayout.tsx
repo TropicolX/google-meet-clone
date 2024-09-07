@@ -23,24 +23,30 @@ type PreviousValues = Map<
 
 gsap.registerPlugin(useGSAP);
 
-const useAnimateGrid = () => {
+const useAnimateVideoLayout = (isSpeakerLayout: boolean) => {
   const previousRef = useRef<PreviousValues>(new Map());
   const ref = useRef<HTMLDivElement>(null);
 
   useGSAP(
     (_, contextSafe) => {
       if (!ref.current) return;
-      let container = ref.current!.querySelector(
-        '.str-video__paginated-grid-layout__group'
+
+      let container = (
+        isSpeakerLayout
+          ? ref.current!.querySelector(
+              '.str-video__speaker-layout__participants-bar'
+            )
+          : ref.current!.querySelector(
+              '.str-video__paginated-grid-layout__group'
+            )
       ) as HTMLElement;
 
       const animateItems = contextSafe!(() => {
         const items = Array.from(
           ref.current!.querySelectorAll('.str-video__participant-view')
         );
-        let layout = ref.current!.querySelector(
-          '.str-video__paginated-grid-layout'
-        ) as HTMLElement;
+
+        let layout = ref.current as HTMLElement;
 
         items.forEach((item, index) => {
           const { left, top, width, height } = item.getBoundingClientRect();
@@ -182,9 +188,9 @@ const useAnimateGrid = () => {
 
       // Set up observer to detect changes
       const observer = new MutationObserver(animateItems);
-      observer.observe(container, { childList: true });
+      const config = { childList: true };
+      observer.observe(container, config);
 
-      // Run the animation observer setup
       animateItems();
 
       // Cleanup observer on unmount
@@ -200,4 +206,4 @@ const useAnimateGrid = () => {
   return { ref };
 };
 
-export default useAnimateGrid;
+export default useAnimateVideoLayout;

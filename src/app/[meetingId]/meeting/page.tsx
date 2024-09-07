@@ -1,9 +1,10 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   CallingState,
-  PaginatedGridLayout,
+  hasScreenShare,
+  isPinned,
   StreamTheme,
   useCall,
   useCallStateHooks,
@@ -16,17 +17,16 @@ import CallInfoButton from '@/components/CallInfoButton';
 import CallEndFilled from '@/components/icons/CallEndFilled';
 import Chat from '@/components/icons/Chat';
 import ClosedCaptions from '@/components/icons/ClosedCaptions';
+import GridLayout from '../../../components/GridLayout';
 import Group from '@/components/icons/Group';
 import Info from '@/components/icons/Info';
 import Mood from '@/components/icons/Mood';
-import ParticipantViewUI from '@/components/ParticipantViewUI';
 import PresentToAll from '@/components/icons/PresentToAll';
 import MeetingPopup from '@/components/MeetingPopup';
 import MoreVert from '@/components/icons/MoreVert';
+import SpeakerLayout from '../../../components/SpeakerLayout';
 import ToggleAudioButton from '@/components/ToggleAudioButton';
 import ToggleVideoButton from '@/components/ToggleVideoButton';
-import VideoPlaceholder from '@/components/VideoPlaceholder';
-import useAnimateGrid from '@/hooks/useAnimateGrid';
 import useTime from '@/hooks/useTime';
 
 interface MeetingProps {
@@ -35,19 +35,20 @@ interface MeetingProps {
   };
 }
 
-const groupSize = 6;
-
 const Meeting = ({ params }: MeetingProps) => {
   const { meetingId } = params;
+  const audioRef = useRef<HTMLAudioElement>(null);
   const router = useRouter();
   const call = useCall();
   const user = useConnectedUser();
   const { currentTime } = useTime();
-  const { ref } = useAnimateGrid();
-  const { useCallCallingState, useParticipants } = useCallStateHooks();
-  const callingState = useCallCallingState();
+  const { useCallCallingState, useParticipants, useScreenShareState } =
+    useCallStateHooks();
   const participants = useParticipants();
-  const audioRef = useRef<HTMLAudioElement>(null);
+  const { screenShare } = useScreenShareState();
+  const callingState = useCallCallingState();
+
+  const [participantInSpotlight, _] = participants;
   const [prevParticipantsCount, setPrevParticipantsCount] = useState(0);
   const isCreator = call?.state.createdBy?.id === user?.id;
 
@@ -70,9 +71,27 @@ const Meeting = ({ params }: MeetingProps) => {
     }
   }, [participants.length, prevParticipantsCount]);
 
+  const isSpeakerLayout = useMemo(() => {
+    if (participantInSpotlight) {
+      return (
+        hasScreenShare(participantInSpotlight) ||
+        isPinned(participantInSpotlight)
+      );
+    }
+    return false;
+  }, [participantInSpotlight]);
+
   const leaveCall = async () => {
     await call?.leave();
     router.push(`/${meetingId}/meeting-end`);
+  };
+
+  const toggleScreenShare = async () => {
+    try {
+      await screenShare.toggle();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   if (
@@ -84,16 +103,8 @@ const Meeting = ({ params }: MeetingProps) => {
   return (
     <StreamTheme className="root-theme">
       <div className="relative w-svw h-svh bg-meet-black overflow-hidden">
-        <div
-          ref={ref}
-          className="w-full h-[calc(100%-5rem)] pt-4 px-4 relative"
-        >
-          <PaginatedGridLayout
-            ParticipantViewUI={ParticipantViewUI}
-            VideoPlaceholder={VideoPlaceholder}
-            groupSize={groupSize}
-          />
-        </div>
+        {isSpeakerLayout && <SpeakerLayout />}
+        {!isSpeakerLayout && <GridLayout />}
         <div className="absolute left-0 bottom-0 right-0 w-full h-20 bg-meet-black text-white text-center flex items-center justify-between">
           {/* Meeting ID */}
           <div className="hidden sm:flex grow shrink basis-1/4 items-center text-start justify-start ml-3 truncate max-w-full">
@@ -116,7 +127,11 @@ const Meeting = ({ params }: MeetingProps) => {
               title={'Send a reaction'}
               className="hidden sm:inline-flex"
             />
-            <CallControlButton icon={<PresentToAll />} title={'Present now'} />
+            <CallControlButton
+              onClick={toggleScreenShare}
+              icon={<PresentToAll />}
+              title={'Present now'}
+            />
             <CallControlButton icon={<BackHand />} title={'Raise hand'} />
             <CallControlButton icon={<MoreVert />} title={'More options'} />
             <CallControlButton

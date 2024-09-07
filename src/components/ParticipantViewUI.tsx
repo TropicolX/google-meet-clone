@@ -10,6 +10,7 @@ import {
   DefaultScreenShareOverlay,
   hasAudio,
   hasScreenShare,
+  isPinned,
   MenuToggle,
   OwnCapability,
   ParticipantActionsContextMenu,
@@ -49,7 +50,7 @@ const ParticipantViewUI = () => {
   const isScreenSharing = hasScreenShare(participant);
   const hasAudioTrack = hasAudio(participant);
   const canUnpinForEveryone = useHasPermissions(OwnCapability.PIN_FOR_EVERYONE);
-  const pinned = !!pin;
+  const pinned = isPinned(participant);
 
   const unpin = () => {
     if (pin?.isLocalPin || !canUnpinForEveryone) {
@@ -107,7 +108,7 @@ const ParticipantViewUI = () => {
       <div
         className={clsx(
           showMenu ? 'opacity-60' : 'opacity-0',
-          'z-2 absolute left-[calc(50%-66px)] top-[calc(50%-22px)] flex items-center justify-center z-1 h-11 transition-opacity duration-300 ease-linear overflow-hidden',
+          'z-2 absolute left-[calc(50%-66px)] top-[calc(50%-22px)] flex items-center justify-center h-11 transition-opacity duration-300 ease-linear overflow-hidden',
           'shadow-[0_1px_2px_0px_rgba(0,0,0,0.3),_0_1px_3px_1px_rgba(0,0,0,.15)] bg-meet-black rounded-full h-11 hover:opacity-90'
         )}
       >

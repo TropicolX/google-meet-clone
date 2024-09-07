@@ -34,7 +34,7 @@ const CallParticipants = ({ participants }: CallParticipantsProps) => {
     <div className="flex flex-col items-center justify-center gap-2">
       <div className="flex items-center justify-center gap-2">
         {participants.slice(0, 3).map((p) => (
-          <Avatar participant={p} width={24} key={p.user.id} />
+          <Avatar participant={p} width={24} key={p.user_session_id} />
         ))}
         {participants.length === 4 && (
           <Avatar participant={participants[3]} width={24} />
