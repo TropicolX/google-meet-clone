@@ -15,8 +15,7 @@ import CallParticipants from '@/components/CallParticipants';
 import Header from '@/components/Header';
 import MeetingPreview from '@/components/MeetingPreview';
 import Spinner from '@/components/Spinner';
-import { AppContext } from '../../contexts/AppProvider';
-import { regex } from '../page';
+import { AppContext, regex } from '../../contexts/AppProvider';
 import { GetCallResponse } from '@stream-io/node-sdk';
 
 interface LobbyProps {

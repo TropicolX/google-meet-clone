@@ -19,7 +19,7 @@ import Header from '@/components/Header';
 import PlainButton from '@/components/PlainButton';
 import TextField from '@/components/TextField';
 import Videocall from '@/components/icons/Videocall';
-import { AppContext } from '../contexts/AppProvider';
+import { AppContext, regex } from '../contexts/AppProvider';
 
 const generateMeetingId = () => {
   const alphabet = 'abcdefghijklmnopqrstuvwxyz';
@@ -28,9 +28,7 @@ const generateMeetingId = () => {
   return `${nanoid(3)}-${nanoid(4)}-${nanoid(3)}`;
 };
 
-export const regex = /^[a-z]{3}-[a-z]{4}-[a-z]{3}$/;
-
-const guestUser: User = { id: 'guest', type: 'guest' };
+const GUEST_USER: User = { id: 'guest', type: 'guest' };
 
 const Home = () => {
   // Features
@@ -71,7 +69,7 @@ const Home = () => {
 
     const client = new StreamVideoClient({
       apiKey,
-      user: guestUser,
+      user: GUEST_USER,
     });
     const call = client.call(callType, code);
 
