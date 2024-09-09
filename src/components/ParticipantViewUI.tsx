@@ -122,9 +122,11 @@ const ParticipantViewUI = () => {
               <ParticipantActionsContextMenu />
             </MenuToggle>
           )}
-          {pinned && <Button onClick={unpin} icon={<KeepOffFilled />} />}
+          {pinned && (
+            <Button title="Unpin" onClick={unpin} icon={<KeepOffFilled />} />
+          )}
         </div>
-        <Button icon={<VisualEffects />} />
+        <Button title="Apply visual effects" icon={<VisualEffects />} />
         <div className="[&_ul>*:nth-child(-n+3)]:hidden">
           <MenuToggle
             strategy="fixed"
@@ -194,14 +196,16 @@ const PinMenuToggleButton = forwardRef<
   HTMLButtonElement,
   ToggleMenuButtonProps
 >(function ToggleButton(props, ref) {
-  return <Button {...props} ref={ref} icon={<Keep />} />;
+  return <Button {...props} title="Pin" ref={ref} icon={<Keep />} />;
 });
 
 const OtherMenuToggleButton = forwardRef<
   HTMLButtonElement,
   ToggleMenuButtonProps
 >(function ToggleButton(props, ref) {
-  return <Button {...props} ref={ref} icon={<MoreVert />} />;
+  return (
+    <Button {...props} title="More options" ref={ref} icon={<MoreVert />} />
+  );
 });
 
 export default ParticipantViewUI;

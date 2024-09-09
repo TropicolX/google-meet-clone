@@ -103,6 +103,8 @@
   .root-theme .str-video__paginated-grid-layout--one .str-video__participant-view {
     border-radius: 0;
     max-height: calc(100svh - 6rem);
+    max-width: 1294px;
+    margin: 0 auto;
   }
 
   .root-theme .str-video__participant-view {

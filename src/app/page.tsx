@@ -13,13 +13,13 @@ import Image from 'next/image';
 import clsx from 'clsx';
 
 import { apiKey, callType } from '@/contexts/MeetProvider';
+import { AppContext, regex } from '@/contexts/AppProvider';
 import Button from '@/components/Button';
 import ButtonWithIcon from '@/components/ButtonWithIcon';
 import Header from '@/components/Header';
 import PlainButton from '@/components/PlainButton';
 import TextField from '@/components/TextField';
 import Videocall from '@/components/icons/Videocall';
-import { AppContext, regex } from '../contexts/AppProvider';
 
 const generateMeetingId = () => {
   const alphabet = 'abcdefghijklmnopqrstuvwxyz';

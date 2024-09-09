@@ -189,7 +189,10 @@ const useAnimateVideoLayout = (isSpeakerLayout: boolean) => {
       // Set up observer to detect changes
       const observer = new MutationObserver(animateItems);
       const config = { childList: true };
-      observer.observe(container, config);
+
+      if (container) {
+        observer.observe(container, config);
+      }
 
       animateItems();
 

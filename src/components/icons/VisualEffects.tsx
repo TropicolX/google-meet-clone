@@ -13,7 +13,7 @@ const VisualEffects = ({ width = 24, height = 24 }: VisualEffectsProps) => {
         lineHeight: `${height}px`,
       }}
       aria-hidden="true"
-      className="google-symbols"
+      className="google-symbols select-none"
     >
       visual_effects
     </i>

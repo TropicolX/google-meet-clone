@@ -5,18 +5,18 @@ import {
   CallingState,
   CallParticipantResponse,
   ErrorFromResponse,
+  GetCallResponse,
   useCall,
   useCallStateHooks,
   useConnectedUser,
 } from '@stream-io/video-react-sdk';
 
+import { AppContext, regex } from '../../contexts/AppProvider';
 import Button from '@/components/Button';
 import CallParticipants from '@/components/CallParticipants';
 import Header from '@/components/Header';
 import MeetingPreview from '@/components/MeetingPreview';
 import Spinner from '@/components/Spinner';
-import { AppContext, regex } from '../../contexts/AppProvider';
-import { GetCallResponse } from '@stream-io/node-sdk';
 
 interface LobbyProps {
   params: {

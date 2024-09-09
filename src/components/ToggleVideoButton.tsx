@@ -9,9 +9,9 @@ import VideocamOff from './icons/VideocamOff';
 import VisualEffects from './icons/VisualEffects';
 import { VideoInputDeviceSelector } from './DeviceSelector';
 
-interface ToggleVideoButtonProps {}
+const ICON_SIZE = 20;
 
-const ToggleVideoButton = ({}: ToggleVideoButtonProps) => {
+const ToggleVideoButton = () => {
   const { useCameraState } = useCallStateHooks();
   const {
     camera,
@@ -30,20 +30,24 @@ const ToggleVideoButton = ({}: ToggleVideoButtonProps) => {
   return (
     <ToggleButtonContainer
       deviceSelectors={
-        <VideoInputDeviceSelector className="w-[23.125rem]" dark />
+        <VideoInputDeviceSelector
+          className="w-[23.125rem]"
+          dark
+          disabled={!hasBrowserPermission}
+        />
       }
       icons={
         <div title="Apply visual effects">
-          <VisualEffects width={20} height={20} />
+          <VisualEffects width={ICON_SIZE} height={ICON_SIZE} />
         </div>
       }
     >
       <CallControlButton
         icon={
           isCameraMute ? (
-            <VideocamOff width={20} height={20} />
+            <VideocamOff width={ICON_SIZE} height={ICON_SIZE} />
           ) : (
-            <Videocam width={20} height={20} />
+            <Videocam width={ICON_SIZE} height={ICON_SIZE} />
           )
         }
         title={isCameraMute ? 'Turn on camera' : 'Turn off camera'}

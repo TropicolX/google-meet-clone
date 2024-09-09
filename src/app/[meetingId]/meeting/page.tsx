@@ -51,13 +51,12 @@ const Meeting = ({ params }: MeetingProps) => {
   const [participantInSpotlight, _] = participants;
   const [prevParticipantsCount, setPrevParticipantsCount] = useState(0);
   const isCreator = call?.state.createdBy?.id === user?.id;
+  const isUnkownOrIdle =
+    callingState === CallingState.UNKNOWN || callingState === CallingState.IDLE;
 
   useEffect(() => {
     const startup = async () => {
-      if (
-        callingState === CallingState.UNKNOWN ||
-        callingState === CallingState.IDLE
-      ) {
+      if (isUnkownOrIdle) {
         router.push(`/${meetingId}`);
       }
     };
@@ -94,11 +93,7 @@ const Meeting = ({ params }: MeetingProps) => {
     }
   };
 
-  if (
-    callingState === CallingState.UNKNOWN ||
-    callingState === CallingState.IDLE
-  )
-    return null;
+  if (isUnkownOrIdle) return null;
 
   return (
     <StreamTheme className="root-theme">

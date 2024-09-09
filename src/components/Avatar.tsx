@@ -68,7 +68,7 @@ const Avatar = ({ text = '', width, participant = {} }: AvatarProps) => {
         avatarClassName
       )}
     >
-      <div className={clsx(text ? 'text-xs' : 'text-base')}>
+      <div className={clsx(text ? 'text-xs' : 'text-base', 'select-none')}>
         {text ? text : name[0]}
       </div>
     </div>
