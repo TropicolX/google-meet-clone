@@ -84,7 +84,6 @@ const MeetProvider = ({ meetingId, children }: MeetProviderProps) => {
 
     return () => {
       myClient.disconnectUser();
-      setClient(undefined);
     };
   }, [clerkUser, isLoaded, isSignedIn, loading, meetingId]);
 
