@@ -1,8 +1,4 @@
 import { useMemo } from 'react';
-import {
-  CallParticipantResponse,
-  StreamVideoParticipant,
-} from '@stream-io/video-react-sdk';
 import clsx from 'clsx';
 import Image from 'next/image';
 
@@ -11,7 +7,10 @@ import useUserColor from '../hooks/useUserColor';
 interface AvatarProps {
   width?: number;
   text?: string;
-  participant?: StreamVideoParticipant | CallParticipantResponse | {};
+  participant?: {
+    name?: string;
+    image?: string;
+  };
 }
 
 export const avatarClassName = 'avatar';
@@ -20,18 +19,7 @@ const IMAGE_SIZE = 160;
 const Avatar = ({ text = '', width, participant = {} }: AvatarProps) => {
   const color = useUserColor();
 
-  const name = useMemo(() => {
-    if ((participant as CallParticipantResponse)?.user) {
-      return (
-        (participant as CallParticipantResponse).user.name ||
-        (participant as CallParticipantResponse).user.id
-      );
-    }
-    return (
-      (participant as StreamVideoParticipant).name ||
-      (participant as StreamVideoParticipant).userId
-    );
-  }, [participant]);
+  const name = participant?.name!;
 
   const randomColor = useMemo(() => {
     if (text) return color('Anonymous');
@@ -39,12 +27,7 @@ const Avatar = ({ text = '', width, participant = {} }: AvatarProps) => {
     return color(name);
   }, [color, name, text]);
 
-  const image = useMemo(() => {
-    if ((participant as CallParticipantResponse)?.user) {
-      return (participant as CallParticipantResponse).user?.image;
-    }
-    return (participant as StreamVideoParticipant)?.image;
-  }, [participant]);
+  const image = participant?.image;
 
   if (image)
     return (
