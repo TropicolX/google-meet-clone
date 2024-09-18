@@ -61,7 +61,7 @@ const Meeting = ({ params }: MeetingProps) => {
       }
     };
     startup();
-  }, [callingState, router, meetingId]);
+  }, [router, meetingId, isUnkownOrIdle]);
 
   useEffect(() => {
     if (participants.length > prevParticipantsCount) {
@@ -149,7 +149,6 @@ const Meeting = ({ params }: MeetingProps) => {
           src="https://www.gstatic.com/meet/sounds/join_call_6a6a67d6bcc7a4e373ed40fdeff3930a.ogg"
         />
       </div>
-      {/* <CallControls /> */}
     </StreamTheme>
   );
 };

@@ -15,6 +15,7 @@ interface AvatarProps {
 }
 
 export const avatarClassName = 'avatar';
+const IMAGE_SIZE = 160;
 
 const Avatar = ({ text = '', width, participant = {} }: AvatarProps) => {
   const color = useUserColor();
@@ -51,8 +52,8 @@ const Avatar = ({ text = '', width, participant = {} }: AvatarProps) => {
         className="w-40 h-40 rounded-full overflow-hidden"
         src={image}
         alt={name}
-        width={160}
-        height={160}
+        width={IMAGE_SIZE}
+        height={IMAGE_SIZE}
       />
     );
 

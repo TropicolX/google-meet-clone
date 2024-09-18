@@ -12,8 +12,8 @@ import {
 import Image from 'next/image';
 import clsx from 'clsx';
 
-import { apiKey, callType } from '@/contexts/MeetProvider';
-import { AppContext, regex } from '@/contexts/AppProvider';
+import { API_KEY, CALL_TYPE } from '@/contexts/MeetProvider';
+import { AppContext, MEETING_ID_REGEX } from '@/contexts/AppProvider';
 import Button from '@/components/Button';
 import ButtonWithIcon from '@/components/ButtonWithIcon';
 import Header from '@/components/Header';
@@ -64,14 +64,14 @@ const Home = () => {
   };
 
   const handleCode = async () => {
-    if (!regex.test(code)) return;
+    if (!MEETING_ID_REGEX.test(code)) return;
     setCheckingCode(true);
 
     const client = new StreamVideoClient({
-      apiKey,
+      apiKey: API_KEY,
       user: GUEST_USER,
     });
-    const call = client.call(callType, code);
+    const call = client.call(CALL_TYPE, code);
 
     try {
       const response: GetCallResponse = await call.get();
