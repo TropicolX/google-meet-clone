@@ -8,10 +8,15 @@ import {
   User,
 } from '@stream-io/video-react-sdk';
 import LoadingOverlay from '../components/LoadingOverlay';
+import { User as ChatUser } from 'stream-chat';
+import { StreamChat } from 'stream-chat';
+import { Chat } from 'stream-chat-react';
 
 type MeetContextType = {
-  client: StreamVideoClient | undefined;
-  setClient: (client: StreamVideoClient) => void;
+  chatClient: StreamChat | undefined;
+  setChatClient: (client: StreamChat) => void;
+  videoClient: StreamVideoClient | undefined;
+  setVideoClient: (client: StreamVideoClient) => void;
   call: Call | undefined;
   setCall: (call: Call | undefined) => void;
   user: User | undefined;
@@ -23,9 +28,11 @@ type MeetProviderProps = {
 };
 
 const initialContext: MeetContextType = {
-  client: undefined,
+  chatClient: undefined,
+  videoClient: undefined,
   call: undefined,
-  setClient: () => {},
+  setVideoClient: () => {},
+  setChatClient: () => {},
   setCall: () => {},
   user: undefined,
 };
@@ -38,7 +45,8 @@ const MeetProvider = ({ meetingId, children }: MeetProviderProps) => {
   const [loading, setLoading] = useState(true);
   const { user: clerkUser, isSignedIn, isLoaded } = useUser();
   const [user, setUser] = useState<User>();
-  const [client, setClient] = useState<StreamVideoClient>();
+  const [chatClient, setChatClient] = useState<StreamChat>();
+  const [videoClient, setVideoClient] = useState<StreamVideoClient>();
   const [call, setCall] = useState<Call>();
 
   useEffect(() => {
@@ -56,8 +64,14 @@ const MeetProvider = ({ meetingId, children }: MeetProviderProps) => {
       return data.token;
     };
 
-    let user: User;
+    const setUpChat = async (user: ChatUser) => {
+      const _chatClient = StreamChat.getInstance(API_KEY);
+      await _chatClient.connectUser(user, tokenProvider);
+      setChatClient(_chatClient);
+      setLoading(false);
+    };
 
+    let user: User | ChatUser;
     if (isSignedIn) {
       user = {
         id: clerkUser.id,
@@ -75,19 +89,20 @@ const MeetProvider = ({ meetingId, children }: MeetProviderProps) => {
       };
     }
 
-    const myClient = new StreamVideoClient({
+    const _videoClient = new StreamVideoClient({
       apiKey: API_KEY,
       user,
       tokenProvider,
     });
-    const call = myClient.call(CALL_TYPE, meetingId);
+    const call = _videoClient.call(CALL_TYPE, meetingId);
+
     setUser(user);
-    setClient(myClient);
+    setVideoClient(_videoClient);
     setCall(call);
-    setLoading(false);
+    setUpChat(user);
 
     return () => {
-      myClient.disconnectUser();
+      _videoClient.disconnectUser();
     };
   }, [clerkUser, isLoaded, isSignedIn, loading, meetingId]);
 
@@ -96,16 +111,20 @@ const MeetProvider = ({ meetingId, children }: MeetProviderProps) => {
   return (
     <MeetContext.Provider
       value={{
-        client,
-        setClient,
+        chatClient,
+        setChatClient,
+        videoClient,
+        setVideoClient,
         call,
         setCall,
         user,
       }}
     >
-      <StreamVideo client={client!}>
-        <StreamCall call={call}>{children}</StreamCall>
-      </StreamVideo>
+      <Chat client={chatClient!}>
+        <StreamVideo client={videoClient!}>
+          <StreamCall call={call}>{children}</StreamCall>
+        </StreamVideo>
+      </Chat>
     </MeetContext.Provider>
   );
 };

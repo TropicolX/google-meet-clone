@@ -31,14 +31,6 @@ const generateMeetingId = () => {
 const GUEST_USER: User = { id: 'guest', type: 'guest' };
 
 const Home = () => {
-  // Features
-  // - Authentication
-  // - Joining a meeting with a room id
-  // - Starting an instant meeting functionality
-  // - Real-time meeting room (call lobby)
-  // - Screen sharing
-  // - Chatting functionality
-
   const { setNewMeeting } = useContext(AppContext);
   const { isLoaded, isSignedIn } = useUser();
   const [code, setCode] = useState('');
