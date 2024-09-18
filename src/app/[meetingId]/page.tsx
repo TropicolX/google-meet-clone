@@ -11,7 +11,7 @@ import {
   useConnectedUser,
 } from '@stream-io/video-react-sdk';
 
-import { AppContext, regex } from '../../contexts/AppProvider';
+import { AppContext, MEETING_ID_REGEX } from '../../contexts/AppProvider';
 import Button from '@/components/Button';
 import CallParticipants from '@/components/CallParticipants';
 import Header from '@/components/Header';
@@ -26,7 +26,7 @@ interface LobbyProps {
 
 const Lobby = ({ params }: LobbyProps) => {
   const { meetingId } = params;
-  const validMeetingId = regex.test(meetingId);
+  const validMeetingId = MEETING_ID_REGEX.test(meetingId);
   const { newMeeting, setNewMeeting } = useContext(AppContext);
   const router = useRouter();
   const connectedUser = useConnectedUser();

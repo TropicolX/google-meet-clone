@@ -1,7 +1,7 @@
 'use client';
 import { createContext, ReactNode, useState } from 'react';
 
-export const regex = /^[a-z]{3}-[a-z]{4}-[a-z]{3}$/;
+export const MEETING_ID_REGEX = /^[a-z]{3}-[a-z]{4}-[a-z]{3}$/;
 
 type AppContextType = {
   newMeeting: boolean;

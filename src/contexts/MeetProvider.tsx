@@ -31,8 +31,8 @@ const initialContext: MeetContextType = {
 };
 
 export const MeetContext = createContext<MeetContextType>(initialContext);
-export const callType = 'default';
-export const apiKey = process.env.NEXT_PUBLIC_STREAM_API_KEY as string;
+export const CALL_TYPE = 'default';
+export const API_KEY = process.env.NEXT_PUBLIC_STREAM_API_KEY as string;
 
 const MeetProvider = ({ meetingId, children }: MeetProviderProps) => {
   const [loading, setLoading] = useState(true);
@@ -75,8 +75,12 @@ const MeetProvider = ({ meetingId, children }: MeetProviderProps) => {
       };
     }
 
-    const myClient = new StreamVideoClient({ apiKey, user, tokenProvider });
-    const call = myClient.call(callType, meetingId);
+    const myClient = new StreamVideoClient({
+      apiKey: API_KEY,
+      user,
+      tokenProvider,
+    });
+    const call = myClient.call(CALL_TYPE, meetingId);
     setUser(user);
     setClient(myClient);
     setCall(call);

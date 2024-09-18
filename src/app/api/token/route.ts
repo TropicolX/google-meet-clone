@@ -1,10 +1,10 @@
 import { StreamClient } from '@stream-io/node-sdk';
 
-const apiKey = process.env.NEXT_PUBLIC_STREAM_API_KEY!;
-const secret = process.env.STREAM_API_SECRET!;
+const API_KEY = process.env.NEXT_PUBLIC_STREAM_API_KEY!;
+const SECRET = process.env.STREAM_API_SECRET!;
 
 export async function POST(request: Request) {
-  const client = new StreamClient(apiKey, secret);
+  const client = new StreamClient(API_KEY, SECRET);
 
   const body = await request.json();
 
