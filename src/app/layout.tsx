@@ -4,6 +4,7 @@ import { ClerkProvider } from '@clerk/nextjs';
 import AppProvider from '../contexts/AppProvider';
 
 import '@stream-io/video-react-sdk/dist/css/styles.css';
+import 'stream-chat-react/dist/css/v2/index.css';
 import './globals.css';
 
 export const metadata: Metadata = {

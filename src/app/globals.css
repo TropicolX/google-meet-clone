@@ -89,10 +89,6 @@
     @apply flex-col min-[500px]:flex-row;
   }
 
-  /* .root-theme .str-video__paginated-grid-layout__wrapper {
-    height: 100%;
-  } */
-
   .root-theme .str-video__paginated-grid-layout--one .str-video__participant-view .str-video__menu-container,
   .root-theme .str-video__participant-view:first-child:nth-last-child(2) .str-video__menu-container,
   .root-theme .str-video__participant-view:first-child:nth-last-child(2)~.str-video__participant-view .str-video__menu-container {

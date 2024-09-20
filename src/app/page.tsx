@@ -17,6 +17,7 @@ import { AppContext, MEETING_ID_REGEX } from '@/contexts/AppProvider';
 import Button from '@/components/Button';
 import ButtonWithIcon from '@/components/ButtonWithIcon';
 import Header from '@/components/Header';
+import KeyboardFilled from '@/components/icons/KeyboardFilled';
 import PlainButton from '@/components/PlainButton';
 import TextField from '@/components/TextField';
 import Videocall from '@/components/icons/Videocall';
@@ -118,6 +119,7 @@ const Home = () => {
                 placeholder="Enter a code or link"
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
+                icon={<KeyboardFilled />}
               />
               <PlainButton onClick={handleCode} disabled={!code}>
                 Join

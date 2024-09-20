@@ -10,12 +10,16 @@ import {
   useCallStateHooks,
   useConnectedUser,
 } from '@stream-io/video-react-sdk';
+import { Channel } from 'stream-chat';
+import { DefaultStreamChatGenerics, useChatContext } from 'stream-chat-react';
 
 import BackHand from '@/components/icons/BackHand';
 import CallControlButton from '@/components/CallControlButton';
 import CallInfoButton from '@/components/CallInfoButton';
 import CallEndFilled from '@/components/icons/CallEndFilled';
 import Chat from '@/components/icons/Chat';
+import ChatFilled from '../../../components/icons/ChatFilled';
+import ChatPopup from '../../../components/ChatPopup';
 import ClosedCaptions from '@/components/icons/ClosedCaptions';
 import GridLayout from '../../../components/GridLayout';
 import Group from '@/components/icons/Group';
@@ -42,12 +46,16 @@ const Meeting = ({ params }: MeetingProps) => {
   const call = useCall();
   const user = useConnectedUser();
   const { currentTime } = useTime();
+  const { client: chatClient } = useChatContext();
   const { useCallCallingState, useParticipants, useScreenShareState } =
     useCallStateHooks();
   const participants = useParticipants();
   const { screenShare } = useScreenShareState();
   const callingState = useCallCallingState();
 
+  const [chatChannel, setChatChannel] =
+    useState<Channel<DefaultStreamChatGenerics>>();
+  const [isChatOpen, setIsChatOpen] = useState(false);
   const [participantInSpotlight, _] = participants;
   const [prevParticipantsCount, setPrevParticipantsCount] = useState(0);
   const isCreator = call?.state.createdBy?.id === user?.id;
@@ -58,10 +66,13 @@ const Meeting = ({ params }: MeetingProps) => {
     const startup = async () => {
       if (isUnkownOrIdle) {
         router.push(`/${meetingId}`);
+      } else if (chatClient) {
+        const channel = chatClient.channel('messaging', meetingId);
+        setChatChannel(channel);
       }
     };
     startup();
-  }, [router, meetingId, isUnkownOrIdle]);
+  }, [router, meetingId, isUnkownOrIdle, chatClient]);
 
   useEffect(() => {
     if (participants.length > prevParticipantsCount) {
@@ -91,6 +102,10 @@ const Meeting = ({ params }: MeetingProps) => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const toggleChatPopup = () => {
+    setIsChatOpen((prev) => !prev);
   };
 
   if (isUnkownOrIdle) return null;
@@ -140,9 +155,20 @@ const Meeting = ({ params }: MeetingProps) => {
           <div className="hidden sm:flex grow shrink basis-1/4 items-center justify-end mr-3">
             <CallInfoButton icon={<Info />} title="Meeting details" />
             <CallInfoButton icon={<Group />} title="People" />
-            <CallInfoButton icon={<Chat />} title="Chat with everyone" />
+            <CallInfoButton
+              onClick={toggleChatPopup}
+              icon={
+                isChatOpen ? <ChatFilled color="var(--icon-blue)" /> : <Chat />
+              }
+              title="Chat with everyone"
+            />
           </div>
         </div>
+        <ChatPopup
+          channel={chatChannel!}
+          isOpen={isChatOpen}
+          onClose={() => setIsChatOpen(false)}
+        />
         {isCreator && <MeetingPopup />}
         <audio
           ref={audioRef}

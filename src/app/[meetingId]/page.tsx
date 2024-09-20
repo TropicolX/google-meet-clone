@@ -10,13 +10,17 @@ import {
   useCallStateHooks,
   useConnectedUser,
 } from '@stream-io/video-react-sdk';
+import { useChatContext } from 'stream-chat-react';
+import { useUser } from '@clerk/nextjs';
 
 import { AppContext, MEETING_ID_REGEX } from '../../contexts/AppProvider';
+import { GUEST_ID, tokenProvider } from '../../contexts/MeetProvider';
 import Button from '@/components/Button';
 import CallParticipants from '@/components/CallParticipants';
 import Header from '@/components/Header';
 import MeetingPreview from '@/components/MeetingPreview';
 import Spinner from '@/components/Spinner';
+import TextField from '../../components/TextField';
 
 interface LobbyProps {
   params: {
@@ -28,17 +32,21 @@ const Lobby = ({ params }: LobbyProps) => {
   const { meetingId } = params;
   const validMeetingId = MEETING_ID_REGEX.test(meetingId);
   const { newMeeting, setNewMeeting } = useContext(AppContext);
+  const { client: chatClient } = useChatContext();
+  const { isSignedIn } = useUser();
   const router = useRouter();
   const connectedUser = useConnectedUser();
   const call = useCall();
   const { useCallCallingState } = useCallStateHooks();
   const callingState = useCallCallingState();
+  const [guestName, setGuestName] = useState('');
   const [errorFetchingMeeting, setErrorFetchingMeeting] = useState(false);
   const [loading, setLoading] = useState(true);
   const [joining, setJoining] = useState(false);
   const [participants, setParticipants] = useState<CallParticipantResponse[]>(
     []
   );
+  const isGuest = !isSignedIn;
 
   useEffect(() => {
     const leavePreviousCall = async () => {
@@ -60,12 +68,11 @@ const Lobby = ({ params }: LobbyProps) => {
     };
 
     const createCall = async () => {
-      if (!connectedUser) return;
       await call?.create({
         data: {
           members: [
             {
-              user_id: connectedUser.id,
+              user_id: connectedUser?.id!,
               role: 'host',
             },
           ],
@@ -76,6 +83,7 @@ const Lobby = ({ params }: LobbyProps) => {
 
     if (!joining && validMeetingId) {
       leavePreviousCall();
+      if (!connectedUser) return;
       if (newMeeting) {
         createCall();
       } else {
@@ -94,8 +102,8 @@ const Lobby = ({ params }: LobbyProps) => {
 
   const heading = useMemo(() => {
     if (loading) return 'Getting ready...';
-    return 'Ready to join?';
-  }, [loading]);
+    return isGuest ? "What's your name?" : 'Ready to join?';
+  }, [loading, isGuest]);
 
   const participantsUI = useMemo(() => {
     switch (true) {
@@ -112,8 +120,36 @@ const Lobby = ({ params }: LobbyProps) => {
     }
   }, [loading, joining, participants]);
 
+  const updateGuestName = async () => {
+    try {
+      await fetch('/api/user', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user: { id: connectedUser?.id, name: guestName },
+        }),
+      });
+      await chatClient.disconnectUser();
+      await chatClient.connectUser(
+        {
+          id: GUEST_ID,
+          type: 'guest',
+          name: guestName,
+        },
+        tokenProvider
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const joinCall = async () => {
     setJoining(true);
+    if (isGuest) {
+      await updateGuestName();
+    }
     if (callingState !== CallingState.JOINED) {
       await call?.join();
     }
@@ -148,14 +184,24 @@ const Lobby = ({ params }: LobbyProps) => {
           <h2 className="text-black text-3xl text-center truncate">
             {heading}
           </h2>
+          {isGuest && !loading && (
+            <TextField
+              label="Name"
+              name="name"
+              placeholder="Your name"
+              value={guestName}
+              onChange={(e) => setGuestName(e.target.value)}
+            />
+          )}
           <span className="text-meet-black font-medium text-center text-sm cursor-default">
             {participantsUI}
           </span>
           <div>
             {!joining && !loading && (
               <Button
-                className="w-60 text-sm !bg-meet-blue !border-meet-blue hover:!bg-primary"
+                className="w-60 text-sm"
                 onClick={joinCall}
+                disabled={isGuest && !guestName}
                 rounding="lg"
               >
                 Join now
