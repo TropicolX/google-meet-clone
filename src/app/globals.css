@@ -181,6 +181,30 @@
     overflow-x: auto;
   }
 
+  .root-theme .str-video__screen-share-overlay__title {
+    color: white;
+  }
+
+  .root-theme .str-video__composite-button .str-video__composite-button__button-group {
+    @apply bg-dark-gray w-[2.5rem] h-[2.5rem];
+
+    &:hover {
+      @apply bg-[#444649];
+    }
+
+    & button {
+      @apply w-[2.5rem] h-[2.5rem];
+    }
+  }
+
+  .root-theme .str-video__composite-button__button-group.str-video__composite-button__button-group--active-secondary {
+    @apply bg-meet-red;
+
+    &:hover {
+      @apply bg-hover-red;
+    }
+  }
+
   .google-symbols {
     font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
     color: white;

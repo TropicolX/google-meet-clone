@@ -25,7 +25,7 @@ const Header = ({ navItems = true }: HeaderProps) => {
       <div className="w-60 max-w-full">
         <a href="/#" className="flex items-center gap-2 w-full">
           <Videocam width={40} height={40} color="var(--primary)" />
-          <div className="font-product-sans text-2xl leading-6 text-meet-gray">
+          <div className="font-product-sans text-2xl leading-6 text-meet-gray select-none">
             <span className="font-medium">Moogle </span>
             <span>Meet</span>
           </div>
@@ -34,7 +34,7 @@ const Header = ({ navItems = true }: HeaderProps) => {
       <div className="flex items-center cursor-default">
         {navItems && (
           <>
-            <div className="hidden md:block mr-2 text-lg leading-4.5 text-meet-gray">
+            <div className="hidden md:block mr-2 text-lg leading-4.5 text-meet-gray select-none">
               {currentDateTime}
             </div>
             <div className="hidden sm:contents [&>button]:mx-2.5">

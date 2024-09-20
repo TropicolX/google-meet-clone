@@ -5,6 +5,7 @@ import {
   CallingState,
   hasScreenShare,
   isPinned,
+  RecordCallButton,
   StreamTheme,
   useCall,
   useCallStateHooks,
@@ -13,7 +14,6 @@ import {
 import { Channel } from 'stream-chat';
 import { DefaultStreamChatGenerics, useChatContext } from 'stream-chat-react';
 
-import BackHand from '@/components/icons/BackHand';
 import CallControlButton from '@/components/CallControlButton';
 import CallInfoButton from '@/components/CallInfoButton';
 import CallEndFilled from '@/components/icons/CallEndFilled';
@@ -28,6 +28,7 @@ import Mood from '@/components/icons/Mood';
 import PresentToAll from '@/components/icons/PresentToAll';
 import MeetingPopup from '@/components/MeetingPopup';
 import MoreVert from '@/components/icons/MoreVert';
+import RecordingsPopup from '@/components/RecordingsPopup';
 import SpeakerLayout from '../../../components/SpeakerLayout';
 import ToggleAudioButton from '@/components/ToggleAudioButton';
 import ToggleVideoButton from '@/components/ToggleVideoButton';
@@ -56,6 +57,7 @@ const Meeting = ({ params }: MeetingProps) => {
   const [chatChannel, setChatChannel] =
     useState<Channel<DefaultStreamChatGenerics>>();
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [isRecordingListOpen, setIsRecordingListOpen] = useState(false);
   const [participantInSpotlight, _] = participants;
   const [prevParticipantsCount, setPrevParticipantsCount] = useState(0);
   const isCreator = call?.state.createdBy?.id === user?.id;
@@ -108,6 +110,10 @@ const Meeting = ({ params }: MeetingProps) => {
     setIsChatOpen((prev) => !prev);
   };
 
+  const toggleRecordingsList = () => {
+    setIsRecordingListOpen((prev) => !prev);
+  };
+
   if (isUnkownOrIdle) return null;
 
   return (
@@ -142,8 +148,18 @@ const Meeting = ({ params }: MeetingProps) => {
               icon={<PresentToAll />}
               title={'Present now'}
             />
-            <CallControlButton icon={<BackHand />} title={'Raise hand'} />
-            <CallControlButton icon={<MoreVert />} title={'More options'} />
+            <RecordCallButton />
+            <div className="relative">
+              <CallControlButton
+                onClick={toggleRecordingsList}
+                icon={<MoreVert />}
+                title={'View recording list'}
+              />
+              <RecordingsPopup
+                isOpen={isRecordingListOpen}
+                onClose={() => setIsRecordingListOpen(false)}
+              />
+            </div>
             <CallControlButton
               onClick={leaveCall}
               icon={<CallEndFilled />}

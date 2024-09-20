@@ -22,12 +22,11 @@ const Popup = forwardRef<HTMLDivElement | null, PopupProps>(function Popup(
     }
   };
 
-  if (!open) return null;
-
   return (
     <div
       ref={ref}
       className={clsx(
+        open ? 'block' : 'hidden',
         `h-[${height}px]`,
         'z-10 bg-white absolute top-auto left-8 max-w-90 w-70 sm:w-90 rounded-lg shadow-[0_1px_2px_0_rgba(60,_64,_67,_.3),_0_2px_6px_2px_rgba(60,_64,_67,_.15)]',
         className
