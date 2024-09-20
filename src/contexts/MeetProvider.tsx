@@ -35,8 +35,8 @@ export const tokenProvider = async (userId: string = '') => {
 };
 
 const MeetProvider = ({ meetingId, children }: MeetProviderProps) => {
-  const [loading, setLoading] = useState(true);
   const { user: clerkUser, isSignedIn, isLoaded } = useUser();
+  const [loading, setLoading] = useState(true);
   const [chatClient, setChatClient] = useState<StreamChat>();
   const [videoClient, setVideoClient] = useState<StreamVideoClient>();
   const [call, setCall] = useState<Call>();
