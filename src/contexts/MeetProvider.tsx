@@ -42,6 +42,7 @@ export const MeetContext = createContext<MeetContextType>(initialContext);
 export const CALL_TYPE = 'default';
 export const API_KEY = process.env.NEXT_PUBLIC_STREAM_API_KEY as string;
 export const GUEST_ID = `guest_${nanoid(15)}`;
+
 export const tokenProvider = async (userId: string = '') => {
   const response = await fetch('/api/token', {
     method: 'POST',
