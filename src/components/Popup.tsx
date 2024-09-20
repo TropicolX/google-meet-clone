@@ -29,7 +29,7 @@ const Popup = forwardRef<HTMLDivElement | null, PopupProps>(function Popup(
       ref={ref}
       className={clsx(
         `h-[${height}px]`,
-        'z-1 bg-white absolute top-auto bottom-0 left-8 max-w-90 w-70 sm:w-90 animate-popup -translate-y-22.5 rounded-lg shadow-[0_1px_2px_0_rgba(60,_64,_67,_.3),_0_2px_6px_2px_rgba(60,_64,_67,_.15)]',
+        'z-10 bg-white absolute top-auto bottom-[5rem] left-8 max-w-90 w-70 sm:w-90 rounded-lg shadow-[0_1px_2px_0_rgba(60,_64,_67,_.3),_0_2px_6px_2px_rgba(60,_64,_67,_.15)]',
         className
       )}
     >

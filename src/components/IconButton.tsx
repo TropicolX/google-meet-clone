@@ -51,7 +51,7 @@ const IconButton = ({
           WebkitMaskImage: 'none',
         }}
         className={clsx(
-          'relative h-14 w-14 rounded-full inline-flex items-center justify-center text-center text-base font-medium border border-solid transition-all ease-linear duration-250 hover:transition-none disabled:bg-transparent disabled:text-[#3c404361] [&_svg]:fill-white',
+          'relative h-14 w-14 rounded-full inline-flex items-center justify-center text-center text-base font-medium border border-solid transition-all ease-linear duration-250 hover:transition-none disabled:bg-transparent disabled:text-[#3c404361]',
           active
             ? 'bg-meet-red border-meet-red hover:bg-hover-red hover:border-hover-red transition-none'
             : 'hover:bg-[rgba(255,255,255,.4)] border-white',
