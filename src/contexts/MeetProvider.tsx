@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useUser } from '@clerk/nextjs';
 import { nanoid } from 'nanoid';
 import {
@@ -13,32 +13,11 @@ import { Chat } from 'stream-chat-react';
 
 import LoadingOverlay from '../components/LoadingOverlay';
 
-type MeetContextType = {
-  chatClient: StreamChat | undefined;
-  setChatClient: (client: StreamChat) => void;
-  videoClient: StreamVideoClient | undefined;
-  setVideoClient: (client: StreamVideoClient) => void;
-  call: Call | undefined;
-  setCall: (call: Call | undefined) => void;
-  user: User | undefined;
-};
-
 type MeetProviderProps = {
   meetingId: string;
   children: React.ReactNode;
 };
 
-const initialContext: MeetContextType = {
-  chatClient: undefined,
-  videoClient: undefined,
-  call: undefined,
-  setVideoClient: () => {},
-  setChatClient: () => {},
-  setCall: () => {},
-  user: undefined,
-};
-
-export const MeetContext = createContext<MeetContextType>(initialContext);
 export const CALL_TYPE = 'default';
 export const API_KEY = process.env.NEXT_PUBLIC_STREAM_API_KEY as string;
 export const GUEST_ID = `guest_${nanoid(15)}`;
@@ -58,7 +37,6 @@ export const tokenProvider = async (userId: string = '') => {
 const MeetProvider = ({ meetingId, children }: MeetProviderProps) => {
   const [loading, setLoading] = useState(true);
   const { user: clerkUser, isSignedIn, isLoaded } = useUser();
-  const [user, setUser] = useState<User>();
   const [chatClient, setChatClient] = useState<StreamChat>();
   const [videoClient, setVideoClient] = useState<StreamVideoClient>();
   const [call, setCall] = useState<Call>();
@@ -103,7 +81,6 @@ const MeetProvider = ({ meetingId, children }: MeetProviderProps) => {
     });
     const call = _videoClient.call(CALL_TYPE, meetingId);
 
-    setUser(user);
     setVideoClient(_videoClient);
     setCall(call);
     setUpChat(user);
@@ -117,23 +94,11 @@ const MeetProvider = ({ meetingId, children }: MeetProviderProps) => {
   if (loading) return <LoadingOverlay />;
 
   return (
-    <MeetContext.Provider
-      value={{
-        chatClient,
-        setChatClient,
-        videoClient,
-        setVideoClient,
-        call,
-        setCall,
-        user,
-      }}
-    >
-      <Chat client={chatClient!}>
-        <StreamVideo client={videoClient!}>
-          <StreamCall call={call}>{children}</StreamCall>
-        </StreamVideo>
-      </Chat>
-    </MeetContext.Provider>
+    <Chat client={chatClient!}>
+      <StreamVideo client={videoClient!}>
+        <StreamCall call={call}>{children}</StreamCall>
+      </StreamVideo>
+    </Chat>
   );
 };
 
