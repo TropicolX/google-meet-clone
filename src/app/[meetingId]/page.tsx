@@ -13,14 +13,14 @@ import {
 import { useChatContext } from 'stream-chat-react';
 import { useUser } from '@clerk/nextjs';
 
-import { AppContext, MEETING_ID_REGEX } from '../../contexts/AppProvider';
-import { GUEST_ID, tokenProvider } from '../../contexts/MeetProvider';
+import { AppContext, MEETING_ID_REGEX } from '@/contexts/AppProvider';
+import { GUEST_ID, tokenProvider } from '@/contexts/MeetProvider';
 import Button from '@/components/Button';
 import CallParticipants from '@/components/CallParticipants';
 import Header from '@/components/Header';
 import MeetingPreview from '@/components/MeetingPreview';
 import Spinner from '@/components/Spinner';
-import TextField from '../../components/TextField';
+import TextField from '@/components/TextField';
 
 interface LobbyProps {
   params: {
