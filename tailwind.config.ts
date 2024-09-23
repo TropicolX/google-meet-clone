@@ -33,7 +33,6 @@ const config: Config = {
         'light-blue': '#659df6',
         'deep-blue': '#1b44c8',
         'icon-hover-blue': '#afcbfa',
-        'icon-active-blue': '#8ab4f7',
         'meet-red': '#ea4335',
         'hover-red': '#eb5346',
         'meet-orange': '#fa7b17',
