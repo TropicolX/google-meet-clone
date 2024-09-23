@@ -53,6 +53,18 @@
     @apply !w-14;
   }
 
+  .root-theme .str-video__speech-indicator {
+    gap: 1.5px;
+  }
+
+  .str-video__speech-indicator__bar,
+  .root-theme .str-video__speech-indicator.str-video__speech-indicator--dominant .str-video__speech-indicator__bar,
+  .root-theme .str-video__speech-indicator .str-video__speech-indicator__bar {
+    background-color: white !important;
+    width: 4px !important;
+    border-radius: 999px !important;
+  }
+
   .root-theme .str-video__paginated-grid-layout,
   .root-theme .str-video__speaker-layout.str-video__speaker-layout--variant-bottom {
     height: calc(100% - 5rem);
@@ -118,18 +130,6 @@
 
   .root-theme .str-video__participant-view--speaking {
     outline: none;
-  }
-
-  .root-theme .str-video__speech-indicator {
-    gap: 1.5px;
-  }
-
-  .str-video__speech-indicator__bar,
-  .root-theme .str-video__speech-indicator.str-video__speech-indicator--dominant .str-video__speech-indicator__bar,
-  .root-theme .str-video__speech-indicator .str-video__speech-indicator__bar {
-    background-color: white !important;
-    width: 4px !important;
-    border-radius: 999px !important;
   }
 
   .root-theme .str-video__paginated-grid-layout--two-four .str-video__participant-view {

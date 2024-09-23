@@ -1,4 +1,3 @@
-import React from 'react';
 import { useCallStateHooks } from '@stream-io/video-react-sdk';
 import clsx from 'clsx';
 

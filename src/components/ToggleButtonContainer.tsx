@@ -1,4 +1,4 @@
-import React, { MutableRefObject, useState } from 'react';
+import { MutableRefObject, useState } from 'react';
 import clsx from 'clsx';
 
 import ExpandLess from './icons/ExpandLess';
