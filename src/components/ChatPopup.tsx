@@ -26,7 +26,7 @@ const ChatPopup = ({ channel, isOpen, onClose }: ChatPopupProps) => {
       <div className="px-0 pb-3 pt-0 h-[calc(100%-66px)]">
         <Channel channel={channel}>
           <Window>
-            <MessageList />
+            <MessageList disableDateSeparator />
             <MessageInput noFiles />
           </Window>
         </Channel>

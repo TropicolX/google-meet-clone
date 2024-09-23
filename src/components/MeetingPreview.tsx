@@ -44,12 +44,12 @@ const MeetingPreview = () => {
       try {
         await camera.enable();
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
       try {
         await microphone.enable();
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
       setDevicesEnabled(true);
     };
