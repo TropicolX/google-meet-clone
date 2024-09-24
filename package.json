@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "detect-port 3000 | xargs -I {} sh -c 'PORT={} && concurrently \"next dev -p $PORT\" \"ngrok http $PORT --domain=$(grep NGROK_DOMAIN .env.local | cut -d '=' -f2)\"'",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
