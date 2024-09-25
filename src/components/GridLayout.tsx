@@ -18,7 +18,7 @@ import VideoPlaceholder from './VideoPlaceholder';
 
 const GROUP_SIZE = 6;
 
-const SpeakerLayout = () => {
+const GridLayout = () => {
   const call = useCall();
   const { useParticipants } = useCallStateHooks();
   const participants = useParticipants();
@@ -109,4 +109,4 @@ const SpeakerLayout = () => {
   );
 };
 
-export default SpeakerLayout;
+export default GridLayout;
