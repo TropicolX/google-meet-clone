@@ -39,7 +39,7 @@ const RecordingsPopup = ({ isOpen, onClose }: RecordingsPopupProps) => {
     <Popup
       ref={ref}
       open={isOpen}
-      className="left-[0] bottom-[3.25rem] overflow-hidden !bg-container-gray shadow-[0_2px_2px_0_rgba(0,0,0,.14),0_3px_1px_-2px_rgba(0,0,0,.12),0_1px_5px_0_rgba(0,0,0,.2)]"
+      className="left-auto right-[0] bottom-[3.25rem] overflow-hidden !bg-container-gray shadow-[0_2px_2px_0_rgba(0,0,0,.14),0_3px_1px_-2px_rgba(0,0,0,.12),0_1px_5px_0_rgba(0,0,0,.2)]"
     >
       <div className="w-full min-h-[7rem] py-8 px-4">
         <CallRecordingList callRecordings={callRecordings} loading={loading} />

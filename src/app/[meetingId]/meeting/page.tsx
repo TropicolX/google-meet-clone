@@ -149,7 +149,7 @@ const Meeting = ({ params }: MeetingProps) => {
               title={'Present now'}
             />
             <RecordCallButton />
-            <div className="relative">
+            <div className="hidden sm:block relative">
               <CallControlButton
                 onClick={toggleRecordingsList}
                 icon={<MoreVert />}
