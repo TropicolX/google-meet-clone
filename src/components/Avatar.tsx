@@ -32,11 +32,11 @@ const Avatar = ({ text = '', width, participant = {} }: AvatarProps) => {
   if (image)
     return (
       <Image
-        className="w-40 h-40 rounded-full overflow-hidden"
+        className="rounded-full overflow-hidden"
         src={image}
         alt={name}
-        width={IMAGE_SIZE}
-        height={IMAGE_SIZE}
+        width={width || IMAGE_SIZE}
+        height={width || IMAGE_SIZE}
       />
     );
 
