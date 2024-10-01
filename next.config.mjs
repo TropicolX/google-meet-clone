@@ -10,6 +10,9 @@ const nextConfig = {
       {
         hostname: 'gstatic.com',
       },
+      {
+        hostname: 'img.clerk.com',
+      },
     ],
   },
 };
