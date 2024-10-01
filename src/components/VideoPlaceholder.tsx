@@ -29,7 +29,7 @@ const VideoPlaceholder = forwardRef<HTMLDivElement, VideoPlaceholderProps>(
       >
         {participant.image && (
           <Image
-            className="rounded-full overflow-hidden"
+            className="max-w-3/10 rounded-full overflow-hidden"
             src={participant.image}
             alt={participant.userId}
             width={WIDTH}
