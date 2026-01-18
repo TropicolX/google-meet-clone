@@ -20,8 +20,8 @@ const PlainButton = ({
     <button
       onClick={onClick}
       className={clsx(
-        size === 'sm' ? 'h-9 text-sm py-2 px-3' : 'text-base py-3 px-4',
-        'rounded inline-flex items-center justify-center text-center font-medium text-primary hover:bg-[rgb(26_115_232_/_4%)] hover:text-[#174ea6] disabled:bg-transparent disabled:text-[#3c404361] select-none',
+        size === 'sm' ? 'h-9 py-2 px-3' : 'h-12 py-3 px-4.5',
+        'rounded-full text-sm inline-flex items-center justify-center text-center font-medium text-primary hover:bg-[rgb(26_115_232_/_4%)] hover:text-[#174ea6] disabled:bg-transparent disabled:text-[#3c404361] select-none',
         className
       )}
       disabled={disabled}

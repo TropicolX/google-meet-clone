@@ -8,7 +8,7 @@ import VideocamOff from './icons/VideocamOff';
 import VisualEffects from './icons/VisualEffects';
 import { VideoInputDeviceSelector } from './DeviceSelector';
 
-const ICON_SIZE = 20;
+const ICON_SIZE = 24;
 
 const ToggleVideoButton = () => {
   const { useCameraState } = useCallStateHooks();
@@ -40,20 +40,15 @@ const ToggleVideoButton = () => {
           <VisualEffects width={ICON_SIZE} height={ICON_SIZE} />
         </div>
       }
+      active={isCameraMute}
     >
       <CallControlButton
-        icon={
-          isCameraMute ? (
-            <VideocamOff width={ICON_SIZE} height={ICON_SIZE} />
-          ) : (
-            <Videocam width={ICON_SIZE} height={ICON_SIZE} />
-          )
-        }
+        icon={isCameraMute ? VideocamOff : Videocam}
         title={isCameraMute ? 'Turn on camera' : 'Turn off camera'}
         onClick={toggleCamera}
         active={isCameraMute}
         alert={!hasBrowserPermission}
-        className={clsx(isCameraMute && 'toggle-button-alert')}
+        className={clsx('w-12 h-12', isCameraMute && 'toggle-button-alert')}
       />
     </ToggleButtonContainer>
   );

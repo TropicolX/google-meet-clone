@@ -18,7 +18,10 @@ const CallInfoButton = ({
       alert={alert}
       icon={icon}
       title={title}
-      className={clsx('call-info-button', className)}
+      className={clsx(
+        'rounded-full w-12 h-12 bg-transparent border-transparent p-3 hover:bg-[#28292c]',
+        className
+      )}
       onClick={onClick}
     />
   );

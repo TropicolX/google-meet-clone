@@ -7,12 +7,14 @@ import Settings from './icons/Settings';
 import useClickOutside from '../hooks/useClickOutside';
 
 interface ToggleButtonContainerProps {
+  active: boolean;
   children: React.ReactNode;
   deviceSelectors: React.ReactNode;
   icons?: React.ReactNode;
 }
 
 const ToggleButtonContainer = ({
+  active,
   children,
   deviceSelectors,
   icons,
@@ -28,7 +30,12 @@ const ToggleButtonContainer = ({
   };
 
   return (
-    <div className="flex items-center h-10 bg-meet-dark-gray rounded-full">
+    <div
+      className={clsx(
+        'flex items-center h-12 rounded-full',
+        active ? 'bg-[#60140f]' : 'bg-meet-dark-gray'
+      )}
+    >
       <div
         className={clsx(
           isOpen ? 'block' : 'hidden',
@@ -49,7 +56,7 @@ const ToggleButtonContainer = ({
         ref={buttonRef}
         onClick={toggleMenu}
         title="Audio settings"
-        className="hidden h-full w-6.5 sm:flex items-center justify-center cursor-pointer"
+        className="hidden h-full w-10 sm:flex items-center justify-center cursor-pointer"
       >
         <div className="h-6 w-6 flex justify-center items-center [&>svg]:ml-[3px]">
           {isOpen ? (

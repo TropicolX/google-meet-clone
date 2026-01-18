@@ -17,7 +17,7 @@ import { AppContext, MEETING_ID_REGEX } from '@/contexts/AppProvider';
 import Button from '@/components/Button';
 import ButtonWithIcon from '@/components/ButtonWithIcon';
 import Header from '@/components/Header';
-import KeyboardFilled from '@/components/icons/KeyboardFilled';
+import Keyboard from '@/components/icons/Keyboard';
 import PlainButton from '@/components/PlainButton';
 import TextField from '@/components/TextField';
 import Videocall from '@/components/icons/Videocall';
@@ -88,38 +88,44 @@ const Home = () => {
       <Header />
       <main
         className={clsx(
-          'flex flex-col items-center justify-center px-6',
+          'flex flex-col items-center justify-center px-8',
           isLoaded ? 'animate-fade-in' : 'opacity-0'
         )}
       >
-        <div className="w-full max-w-2xl p-4 pt-7 text-center inline-flex flex-col items-center basis-auto shrink-0">
+        <div className="w-full max-w-2xl pt-7 text-center inline-flex flex-col items-center basis-auto shrink-0">
           <h1 className="text-5xl tracking-normal text-black pb-2">
             Video calls and meetings for everyone
           </h1>
-          <p className="text-1x text-gray pb-8">
+          <p className="text-1x text-gray pb-6 sm:pb-8">
             Connect, collaborate, and celebrate from anywhere with Moogle Meet
           </p>
         </div>
-        <div className="w-full max-w-xl flex justify-center">
-          <div className="flex flex-col items-start sm:flex-row gap-6 sm:gap-2 sm:items-center justify-center">
+        <div className="w-full max-w-xl flex justify-start">
+          <div className="flex flex-col items-start sm:flex-row gap-4 sm:gap-2 sm:items-center justify-center">
             {isSignedIn && (
-              <ButtonWithIcon onClick={handleNewMeeting} icon={<Videocall />}>
+              <ButtonWithIcon
+                rounding="lg"
+                onClick={handleNewMeeting}
+                icon={<Videocall />}
+              >
                 New meeting
               </ButtonWithIcon>
             )}
             {!isSignedIn && (
               <SignInButton>
-                <Button size="md">Sign in</Button>
+                <Button size="md" rounding="lg">
+                  Sign in
+                </Button>
               </SignInButton>
             )}
-            <div className="flex items-center gap-2 sm:ml-4">
+            <div className="flex items-center gap-2 sm:ml-2">
               <TextField
                 label="Code or link"
                 name="code"
                 placeholder="Enter a code or link"
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
-                icon={<KeyboardFilled />}
+                icon={<Keyboard />}
               />
               <PlainButton onClick={handleCode} disabled={!code}>
                 Join
@@ -157,10 +163,10 @@ const Home = () => {
             </div>
           </div>
         )}
-        <footer className="w-full max-w-xl mt-20 pb-4 text-start">
-          <div className="text-xs text-gray tracking-wider">
+        <footer className="w-full max-w-xl mt-20 pt-4 text-start">
+          <div className="text-xs text-gray">
             <span className="cursor-pointer">
-              <a className="text-meet-blue hover:underline" href="#">
+              <a className="text-meet-blue underline" href="#">
                 Learn more
               </a>{' '}
               about Moogle Meet

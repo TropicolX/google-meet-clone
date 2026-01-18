@@ -9,30 +9,30 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@clerk/nextjs": "^5.3.0",
-    "@gsap/react": "^2.1.1",
-    "@stream-io/node-sdk": "^0.4.0",
-    "@stream-io/video-react-sdk": "^1.2.20",
+    "@clerk/nextjs": "^6.36.8",
+    "@gsap/react": "^2.1.2",
+    "@stream-io/node-sdk": "^0.7.33",
+    "@stream-io/video-react-sdk": "^1.31.3",
     "clsx": "^2.1.1",
-    "gsap": "^3.12.5",
-    "nanoid": "^5.0.7",
-    "next": "^15.0.0-rc.0",
-    "react": "^19.0.0-rc-e56f4ae3-20240830",
-    "react-dom": "^19.0.0-rc-e56f4ae3-20240830",
-    "stream-chat": "^8.37.0",
-    "stream-chat-react": "^11.23.5",
-    "svix": "^1.32.0"
+    "gsap": "^3.14.2",
+    "nanoid": "^5.1.6",
+    "next": "^16.1.3",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "stream-chat": "^9.28.0",
+    "stream-chat-react": "^13.13.3",
+    "svix": "^1.84.1"
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "concurrently": "^8.2.2",
-    "detect-port": "^1.6.1",
-    "eslint": "^8",
-    "eslint-config-next": "^15.0.0-rc.0",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "@types/node": "^25.0.9",
+    "@types/react": "^19.2.8",
+    "@types/react-dom": "^19.2.3",
+    "concurrently": "^9.2.1",
+    "detect-port": "^2.1.0",
+    "eslint": "^9.39.2",
+    "eslint-config-next": "^16.1.3",
+    "postcss": "^8.5.6",
+    "tailwindcss": "3.4.1",
+    "typescript": "^5.9.3"
   }
 }

@@ -108,7 +108,7 @@ const MeetingPreview = () => {
           <div className="z-3 absolute bottom-4 left-1/2 -ml-17 flex items-center gap-6">
             {/* Microphone control */}
             <IconButton
-              icon={isMicrophoneMute ? <MicOff /> : <Mic />}
+              icon={isMicrophoneMute ? MicOff : Mic}
               title={
                 isMicrophoneMute ? 'Turn on microphone' : 'Turn off microphone'
               }
@@ -119,7 +119,7 @@ const MeetingPreview = () => {
             />
             {/* Camera control */}
             <IconButton
-              icon={isCameraMute ? <VideocamOff /> : <Videocam />}
+              icon={isCameraMute ? VideocamOff : Videocam}
               title={isCameraMute ? 'Turn on camera' : 'Turn off camera'}
               onClick={toggleCamera}
               active={isCameraMute}
@@ -145,13 +145,13 @@ const MeetingPreview = () => {
             <div className="z-2 absolute top-2.5 right-1 [&>button]:w-12 [&>button]:h-12 [&>button]:border-none [&>button]:transition-none [&>button]:hover:bg-[rgba(255,255,255,.2)] [&>button]:hover:shadow-none">
               <IconButton
                 title="More options"
-                icon={<MoreVert />}
+                icon={MoreVert}
                 variant="secondary"
               />
             </div>
             <div className="z-3 absolute bottom-4 right-2.5">
               <IconButton
-                icon={<VisualEffects />}
+                icon={VisualEffects}
                 title="Apply visual effects"
                 variant="secondary"
               />

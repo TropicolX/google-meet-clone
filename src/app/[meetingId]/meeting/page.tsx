@@ -131,28 +131,28 @@ const Meeting = ({ params }: MeetingProps) => {
             </div>
           </div>
           {/* Meeting Controls */}
-          <div className="relative flex grow shrink basis-1/4 items-center justify-center px-1.5 gap-3 ml-0">
+          <div className="relative flex grow shrink basis-1/4 items-center justify-center px-1.5 gap-2 ml-0">
             <ToggleAudioButton />
             <ToggleVideoButton />
             <CallControlButton
-              icon={<ClosedCaptions />}
+              icon={ClosedCaptions}
               title={'Turn on captions'}
             />
             <CallControlButton
-              icon={<Mood />}
+              icon={Mood}
               title={'Send a reaction'}
-              className="hidden sm:inline-flex"
+              className="w-14 hidden sm:inline-flex"
             />
             <CallControlButton
               onClick={toggleScreenShare}
-              icon={<PresentToAll />}
+              icon={PresentToAll}
               title={'Present now'}
             />
             <RecordCallButton />
             <div className="hidden sm:block relative">
               <CallControlButton
                 onClick={toggleRecordingsList}
-                icon={<MoreVert />}
+                icon={MoreVert}
                 title={'View recording list'}
               />
               <RecordingsPopup
@@ -162,20 +162,18 @@ const Meeting = ({ params }: MeetingProps) => {
             </div>
             <CallControlButton
               onClick={leaveCall}
-              icon={<CallEndFilled />}
+              icon={CallEndFilled}
               title={'Leave call'}
-              className="leave-call-button"
+              className="w-14 bg-meet-red border-meet-red hover:bg-hover-red"
             />
           </div>
           {/* Meeting Info */}
           <div className="hidden sm:flex grow shrink basis-1/4 items-center justify-end mr-3">
-            <CallInfoButton icon={<Info />} title="Meeting details" />
-            <CallInfoButton icon={<Group />} title="People" />
+            <CallInfoButton icon={Info} title="Meeting details" />
+            <CallInfoButton icon={Group} title="People" />
             <CallInfoButton
               onClick={toggleChatPopup}
-              icon={
-                isChatOpen ? <ChatFilled color="var(--icon-blue)" /> : <Chat />
-              }
+              icon={isChatOpen ? ChatFilled : Chat}
               title="Chat with everyone"
             />
           </div>

@@ -18,39 +18,12 @@
 }
 
 @layer components {
-
-  .call-control-button,
-  .call-info-button {
-    @apply rounded-full;
-  }
-
-  .call-control-button {
-    @apply !w-10 !h-10 bg-dark-gray !border-dark-gray;
+  .toggle-button-alert {
+    @apply bg-meet-red border-meet-red;
 
     &:hover {
-      @apply !bg-[#444649];
+      @apply bg-hover-red;
     }
-  }
-
-  .call-info-button {
-    @apply !w-12 !h-12 !bg-transparent !border-transparent p-3;
-
-    &:hover {
-      @apply !bg-[#28292c];
-    }
-  }
-
-  .toggle-button-alert,
-  .leave-call-button {
-    @apply !bg-meet-red !border-meet-red;
-
-    &:hover {
-      @apply !bg-hover-red;
-    }
-  }
-
-  .leave-call-button {
-    @apply !w-14;
   }
 
   .root-theme .str-video__speech-indicator {
@@ -109,7 +82,7 @@
 
   .root-theme .spotlight--one>.str-video__participant-view,
   .root-theme .str-video__paginated-grid-layout--one .str-video__participant-view {
-    border-radius: 0;
+    border-radius: 24px;
     max-height: calc(100svh - 6rem);
     max-width: 1294px;
     margin: 0 auto;
@@ -121,7 +94,7 @@
   }
 
   .root-theme .str-video__paginated-grid-layout--one .participant-view-placeholder {
-    background: transparent;
+    /* background: transparent; */
   }
 
   .root-theme .str-video__paginated-grid-layout--one .speech-ring {
@@ -186,14 +159,14 @@
   }
 
   .root-theme .str-video__composite-button .str-video__composite-button__button-group {
-    @apply bg-dark-gray w-[2.5rem] h-[2.5rem];
+    @apply bg-dark-gray w-14 h-12;
 
     &:hover {
       @apply bg-[#444649];
     }
 
     & button {
-      @apply w-[2.5rem] h-[2.5rem];
+      @apply w-14 h-12;
     }
   }
 

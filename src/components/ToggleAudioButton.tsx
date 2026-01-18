@@ -10,8 +10,6 @@ import MicFilled from './icons/MicFilled';
 import MicOffFilled from './icons/MicOffFilled';
 import ToggleButtonContainer from './ToggleButtonContainer';
 
-const ICON_SIZE = 20;
-
 const ToggleAudioButton = () => {
   const { useMicrophoneState } = useCallStateHooks();
   const {
@@ -44,20 +42,15 @@ const ToggleAudioButton = () => {
           />
         </>
       }
+      active={isMicrophoneMute}
     >
       <CallControlButton
-        icon={
-          isMicrophoneMute ? (
-            <MicOffFilled width={ICON_SIZE} height={ICON_SIZE} />
-          ) : (
-            <MicFilled width={ICON_SIZE} height={ICON_SIZE} />
-          )
-        }
+        icon={isMicrophoneMute ? MicOffFilled : MicFilled}
         title={isMicrophoneMute ? 'Turn on microphone' : 'Turn off microphone'}
         onClick={toggleMicrophone}
         active={isMicrophoneMute}
         alert={!hasBrowserPermission}
-        className={clsx(isMicrophoneMute && 'toggle-button-alert')}
+        className={clsx('w-12 h-12', isMicrophoneMute && 'toggle-button-alert')}
       />
     </ToggleButtonContainer>
   );

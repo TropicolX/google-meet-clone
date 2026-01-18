@@ -9,7 +9,7 @@ interface ChatFilledProps {
 const ChatFilled = ({
   width = 24,
   height = 24,
-  color = '#fff',
+  color = 'var(--icon-blue)',
 }: ChatFilledProps) => {
   return (
     <svg

@@ -18,7 +18,10 @@ const CallControlButton = ({
       alert={alert}
       icon={icon}
       title={title}
-      className={clsx('call-control-button', className)}
+      className={clsx(
+        'rounded-full h-12 bg-dark-gray border-dark-gray hover:bg-[#444649]',
+        className || 'w-14'
+      )}
       onClick={onClick}
     />
   );

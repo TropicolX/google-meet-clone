@@ -1,10 +1,14 @@
-import { ReactNode } from 'react';
+import { ComponentType, ReactComponentElement, ReactNode } from 'react';
 import clsx from 'clsx';
 
 import Exclamation from './icons/Exclamation';
 
 export interface IconButtonProps {
-  icon: ReactNode;
+  icon: ComponentType<{
+    width?: number;
+    height?: number;
+    color?: string;
+  }>;
   onClick?: () => void;
   active?: boolean;
   variant?: 'primary' | 'secondary';
@@ -16,7 +20,7 @@ export interface IconButtonProps {
 const IconButton = ({
   active = false,
   alert = false,
-  icon,
+  icon: Icon,
   onClick,
   variant = 'primary',
   title,
@@ -38,7 +42,7 @@ const IconButton = ({
           className
         )}
       >
-        {icon}
+        <Icon />
         {alert && alertIcon}
       </button>
     );
@@ -51,14 +55,16 @@ const IconButton = ({
           WebkitMaskImage: 'none',
         }}
         className={clsx(
-          'relative h-14 w-14 rounded-full inline-flex items-center justify-center text-center text-base font-medium border border-solid transition-all ease-linear duration-250 hover:transition-none disabled:bg-transparent disabled:text-[#3c404361]',
-          active
-            ? 'bg-meet-red border-meet-red hover:bg-hover-red hover:border-hover-red transition-none'
-            : 'hover:bg-[rgba(255,255,255,.4)] border-white',
-          className
+          'relative inline-flex items-center justify-center text-center text-base font-medium border border-solid transition-all ease-linear duration-250 hover:transition-none disabled:bg-transparent disabled:text-[#3c404361]',
+          className || 'h-14 w-14 rounded-full',
+          active &&
+            'bg-[#f9dedc] border-[#f9dedc] hover:bg-hover-red hover:border-hover-red transition-none rounded-xl',
+          !active &&
+            !className &&
+            'hover:bg-[rgba(255,255,255,.4)] border-white'
         )}
       >
-        {icon}
+        <Icon color={active ? '#601410' : 'white'} />
         {alert && alertIcon}
       </button>
     );

@@ -25,16 +25,26 @@ const VideoPlaceholder = forwardRef<HTMLDivElement, VideoPlaceholderProps>(
       <div
         ref={ref}
         style={style}
-        className={`absolute w-full h-full rounded-[inherit] bg-dark-gray flex items-center justify-center ${placeholderClassName}`}
+        className={`absolute overflow-hidden w-full h-full rounded-[inherit] bg-dark-gray flex items-center justify-center ${placeholderClassName}`}
       >
         {participant.image && (
           <Image
-            className="max-w-3/10 rounded-full overflow-hidden"
+            className="z-1 max-w-3/10 rounded-full overflow-hidden"
             src={participant.image}
             alt={participant.userId}
             width={WIDTH}
             height={WIDTH}
           />
+        )}
+        {participant.image && (
+          <div className="absolute left-0 top-0 w-full h-full blur-[140px]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              alt="background"
+              className="w-full h-full object-cover"
+              src={participant.image}
+            />
+          </div>
         )}
         <div
           style={{

@@ -27,10 +27,10 @@ const ButtonWithIcon = ({
         rounding === 'lg' && 'rounded-full',
         size === 'sm'
           ? 'h-10 text-sm px-3 tracking-normal'
-          : 'h-12 text-base pr-4 pl-3',
+          : 'h-12 text-sm px-4',
         variant === 'primary' && 'bg-primary hover:bg-hover-primary',
         variant === 'secondary' && 'bg-meet-blue hover:bg-[#0a4ec4]',
-        'inline-flex items-center justify-center text-center font-medium tracking-looser text-white hover:shadow transition-[border_.28s_cubic-bezier(.4,0,.2,1),box-shadow_.28s_cubic-bezier(.4,0,.2,1)] active:bg-deep-blue active:border-deep-blue'
+        'inline-flex items-center justify-center text-center font-medium text-white hover:shadow transition-[border_.28s_cubic-bezier(.4,0,.2,1),box-shadow_.28s_cubic-bezier(.4,0,.2,1)] active:bg-deep-blue active:border-deep-blue'
       )}
     >
       <span className="flex item-center justify-center mr-2">{icon}</span>
