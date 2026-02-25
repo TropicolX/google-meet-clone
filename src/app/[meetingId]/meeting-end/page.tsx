@@ -1,29 +1,30 @@
-'use client';
-import { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { CallingState, useCallStateHooks } from '@stream-io/video-react-sdk';
+"use client";
+import { use, useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { CallingState, useCallStateHooks } from "@stream-io/video-react-sdk";
 
-import Button from '@/components/Button';
-import PlainButton from '@/components/PlainButton';
+import Button from "@/components/Button";
+import PlainButton from "@/components/PlainButton";
 
 interface MeetingEndProps {
-  params: {
+  params: Promise<{
     meetingId: string;
-  };
-  searchParams?: {
+  }>;
+  searchParams: Promise<{
     invalid: string;
-  };
+  }>;
 }
 
 const MeetingEnd = ({ params, searchParams }: MeetingEndProps) => {
-  const { meetingId } = params;
+  const { meetingId } = use(params);
+  const { invalid } = use(searchParams);
   const router = useRouter();
   const { useCallCallingState } = useCallStateHooks();
   const callingState = useCallCallingState();
   const audioRef = useRef<HTMLAudioElement>(null);
   const [countdownNumber, setCountdownNumber] = useState(60);
-  const invalidMeeting = searchParams?.invalid === 'true';
+  const invalidMeeting = invalid === "true";
 
   useEffect(() => {
     if (!invalidMeeting && callingState !== CallingState.LEFT) {
@@ -50,7 +51,7 @@ const MeetingEnd = ({ params, searchParams }: MeetingEndProps) => {
   };
 
   const returnHome = () => {
-    router.push('/');
+    router.push("/");
   };
 
   if (!invalidMeeting && callingState !== CallingState.LEFT) return null;
@@ -64,7 +65,7 @@ const MeetingEnd = ({ params, searchParams }: MeetingEndProps) => {
           </div>
           <svg
             style={{
-              transform: 'rotateY(-180deg) rotateZ(-90deg)',
+              transform: "rotateY(-180deg) rotateZ(-90deg)",
             }}
             className="absolute -top-[32px] -right-[12px] w-[100px] h-[100px]"
           >
@@ -87,13 +88,13 @@ const MeetingEnd = ({ params, searchParams }: MeetingEndProps) => {
       </div>
       <div className="mt-6 px-4 flex flex-col items-center gap-8">
         <h1 className="text-4xl leading-[2.75rem] font-normal text-dark-gray tracking-normal">
-          {invalidMeeting ? 'Check your meeting code' : 'You left the meeting'}
+          {invalidMeeting ? "Check your meeting code" : "You left the meeting"}
         </h1>
         {invalidMeeting && (
           <div className="font-roboto text-base text-meet-gray text-center">
             <p>
               Make sure you entered the correct meeting code in the URL, for
-              example:{' '}
+              example:{" "}
             </p>
             <p>
               https://{window.location.host}/

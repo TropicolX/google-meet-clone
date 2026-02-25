@@ -1,15 +1,16 @@
-'use client';
-import { ReactNode } from 'react';
+"use client";
+import { ReactNode, use } from "react";
 
-import MeetProvider from '@/contexts/MeetProvider';
+import MeetProvider from "@/contexts/MeetProvider";
 
 type LayoutProps = {
   children: ReactNode;
-  params: {
+  params: Promise<{
     meetingId: string;
-  };
+  }>;
 };
 
 export default function Layout({ children, params }: LayoutProps) {
-  return <MeetProvider meetingId={params.meetingId}>{children}</MeetProvider>;
+  const { meetingId } = use(params);
+  return <MeetProvider meetingId={meetingId}>{children}</MeetProvider>;
 }

@@ -1,6 +1,6 @@
-'use client';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
+"use client";
+import { use, useEffect, useMemo, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   CallingState,
   hasScreenShare,
@@ -10,38 +10,38 @@ import {
   useCall,
   useCallStateHooks,
   useConnectedUser,
-} from '@stream-io/video-react-sdk';
-import { Channel } from 'stream-chat';
-import { DefaultStreamChatGenerics, useChatContext } from 'stream-chat-react';
+} from "@stream-io/video-react-sdk";
+import { Channel } from "stream-chat";
+import { useChatContext } from "stream-chat-react";
 
-import CallControlButton from '@/components/CallControlButton';
-import CallInfoButton from '@/components/CallInfoButton';
-import CallEndFilled from '@/components/icons/CallEndFilled';
-import Chat from '@/components/icons/Chat';
-import ChatFilled from '@/components/icons/ChatFilled';
-import ChatPopup from '@/components/ChatPopup';
-import ClosedCaptions from '@/components/icons/ClosedCaptions';
-import GridLayout from '@/components/GridLayout';
-import Group from '@/components/icons/Group';
-import Info from '@/components/icons/Info';
-import Mood from '@/components/icons/Mood';
-import PresentToAll from '@/components/icons/PresentToAll';
-import MeetingPopup from '@/components/MeetingPopup';
-import MoreVert from '@/components/icons/MoreVert';
-import RecordingsPopup from '@/components/RecordingsPopup';
-import SpeakerLayout from '@/components/SpeakerLayout';
-import ToggleAudioButton from '@/components/ToggleAudioButton';
-import ToggleVideoButton from '@/components/ToggleVideoButton';
-import useTime from '@/hooks/useTime';
+import CallControlButton from "@/components/CallControlButton";
+import CallInfoButton from "@/components/CallInfoButton";
+import CallEndFilled from "@/components/icons/CallEndFilled";
+import Chat from "@/components/icons/Chat";
+import ChatFilled from "@/components/icons/ChatFilled";
+import ChatPopup from "@/components/ChatPopup";
+import ClosedCaptions from "@/components/icons/ClosedCaptions";
+import GridLayout from "@/components/GridLayout";
+import Group from "@/components/icons/Group";
+import Info from "@/components/icons/Info";
+import Mood from "@/components/icons/Mood";
+import PresentToAll from "@/components/icons/PresentToAll";
+import MeetingPopup from "@/components/MeetingPopup";
+import MoreVert from "@/components/icons/MoreVert";
+import RecordingsPopup from "@/components/RecordingsPopup";
+import SpeakerLayout from "@/components/SpeakerLayout";
+import ToggleAudioButton from "@/components/ToggleAudioButton";
+import ToggleVideoButton from "@/components/ToggleVideoButton";
+import useTime from "@/hooks/useTime";
 
 interface MeetingProps {
-  params: {
+  params: Promise<{
     meetingId: string;
-  };
+  }>;
 }
 
 const Meeting = ({ params }: MeetingProps) => {
-  const { meetingId } = params;
+  const { meetingId } = use(params);
   const audioRef = useRef<HTMLAudioElement>(null);
   const router = useRouter();
   const call = useCall();
@@ -54,8 +54,7 @@ const Meeting = ({ params }: MeetingProps) => {
   const { screenShare } = useScreenShareState();
   const callingState = useCallCallingState();
 
-  const [chatChannel, setChatChannel] =
-    useState<Channel<DefaultStreamChatGenerics>>();
+  const [chatChannel, setChatChannel] = useState<Channel>();
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isRecordingListOpen, setIsRecordingListOpen] = useState(false);
   const [participantInSpotlight, _] = participants;
@@ -69,7 +68,7 @@ const Meeting = ({ params }: MeetingProps) => {
       if (isUnkownOrIdle) {
         router.push(`/${meetingId}`);
       } else if (chatClient) {
-        const channel = chatClient.channel('messaging', meetingId);
+        const channel = chatClient.channel("messaging", meetingId);
         setChatChannel(channel);
       }
     };
@@ -126,7 +125,7 @@ const Meeting = ({ params }: MeetingProps) => {
           <div className="hidden sm:flex grow shrink basis-1/4 items-center text-start justify-start ml-3 truncate max-w-full">
             <div className="flex items-center overflow-hidden mx-3 h-20 gap-3 select-none">
               <span className="font-medium">{currentTime}</span>
-              <span>{'|'}</span>
+              <span>{"|"}</span>
               <span className="font-medium truncate">{meetingId}</span>
             </div>
           </div>
@@ -136,24 +135,24 @@ const Meeting = ({ params }: MeetingProps) => {
             <ToggleVideoButton />
             <CallControlButton
               icon={ClosedCaptions}
-              title={'Turn on captions'}
+              title={"Turn on captions"}
             />
             <CallControlButton
               icon={Mood}
-              title={'Send a reaction'}
+              title={"Send a reaction"}
               className="w-14 hidden sm:inline-flex"
             />
             <CallControlButton
               onClick={toggleScreenShare}
               icon={PresentToAll}
-              title={'Present now'}
+              title={"Present now"}
             />
             <RecordCallButton />
             <div className="hidden sm:block relative">
               <CallControlButton
                 onClick={toggleRecordingsList}
                 icon={MoreVert}
-                title={'View recording list'}
+                title={"View recording list"}
               />
               <RecordingsPopup
                 isOpen={isRecordingListOpen}
@@ -163,7 +162,7 @@ const Meeting = ({ params }: MeetingProps) => {
             <CallControlButton
               onClick={leaveCall}
               icon={CallEndFilled}
-              title={'Leave call'}
+              title={"Leave call"}
               className="w-14 bg-meet-red border-meet-red hover:bg-hover-red"
             />
           </div>

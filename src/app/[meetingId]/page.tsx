@@ -1,6 +1,6 @@
-'use client';
-import { useContext, useEffect, useMemo, useState } from 'react';
-import { useRouter } from 'next/navigation';
+"use client";
+import { use, useContext, useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   CallingState,
   CallParticipantResponse,
@@ -9,27 +9,27 @@ import {
   useCall,
   useCallStateHooks,
   useConnectedUser,
-} from '@stream-io/video-react-sdk';
-import { useChatContext } from 'stream-chat-react';
-import { useUser } from '@clerk/nextjs';
+} from "@stream-io/video-react-sdk";
+import { useChatContext } from "stream-chat-react";
+import { useUser } from "@clerk/nextjs";
 
-import { AppContext, MEETING_ID_REGEX } from '@/contexts/AppProvider';
-import { GUEST_ID, tokenProvider } from '@/contexts/MeetProvider';
-import Button from '@/components/Button';
-import CallParticipants from '@/components/CallParticipants';
-import Header from '@/components/Header';
-import MeetingPreview from '@/components/MeetingPreview';
-import Spinner from '@/components/Spinner';
-import TextField from '@/components/TextField';
+import { AppContext, MEETING_ID_REGEX } from "@/contexts/AppProvider";
+import { GUEST_ID, tokenProvider } from "@/contexts/MeetProvider";
+import Button from "@/components/Button";
+import CallParticipants from "@/components/CallParticipants";
+import Header from "@/components/Header";
+import MeetingPreview from "@/components/MeetingPreview";
+import Spinner from "@/components/Spinner";
+import TextField from "@/components/TextField";
 
 interface LobbyProps {
-  params: {
+  params: Promise<{
     meetingId: string;
-  };
+  }>;
 }
 
 const Lobby = ({ params }: LobbyProps) => {
-  const { meetingId } = params;
+  const { meetingId } = use(params);
   const validMeetingId = MEETING_ID_REGEX.test(meetingId);
   const { newMeeting, setNewMeeting } = useContext(AppContext);
   const { client: chatClient } = useChatContext();
@@ -39,7 +39,7 @@ const Lobby = ({ params }: LobbyProps) => {
   const call = useCall();
   const { useCallCallingState } = useCallStateHooks();
   const callingState = useCallCallingState();
-  const [guestName, setGuestName] = useState('');
+  const [guestName, setGuestName] = useState("");
   const [errorFetchingMeeting, setErrorFetchingMeeting] = useState(false);
   const [loading, setLoading] = useState(true);
   const [joining, setJoining] = useState(false);
@@ -73,7 +73,7 @@ const Lobby = ({ params }: LobbyProps) => {
           members: [
             {
               user_id: connectedUser?.id!,
-              role: 'host',
+              role: "host",
             },
           ],
         },
@@ -101,8 +101,8 @@ const Lobby = ({ params }: LobbyProps) => {
   }, [newMeeting, setNewMeeting]);
 
   const heading = useMemo(() => {
-    if (loading) return 'Getting ready...';
-    return isGuest ? "What's your name?" : 'Ready to join?';
+    if (loading) return "Getting ready...";
+    return isGuest ? "What's your name?" : "Ready to join?";
   }, [loading, isGuest]);
 
   const participantsUI = useMemo(() => {
@@ -112,7 +112,7 @@ const Lobby = ({ params }: LobbyProps) => {
       case joining:
         return "You'll join the call in just a moment";
       case participants.length === 0:
-        return 'No one else is here';
+        return "No one else is here";
       case participants.length > 0:
         return <CallParticipants participants={participants} />;
       default:
@@ -122,10 +122,10 @@ const Lobby = ({ params }: LobbyProps) => {
 
   const updateGuestName = async () => {
     try {
-      await fetch('/api/user', {
-        method: 'POST',
+      await fetch("/api/user", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           user: { id: connectedUser?.id, name: guestName },
@@ -135,7 +135,7 @@ const Lobby = ({ params }: LobbyProps) => {
       await chatClient.connectUser(
         {
           id: GUEST_ID,
-          type: 'guest',
+          type: "guest",
           name: guestName,
         },
         tokenProvider
@@ -164,7 +164,7 @@ const Lobby = ({ params }: LobbyProps) => {
           <h1 className="text-4xl leading-[2.75rem] font-normal text-dark-gray tracking-normal mb-12">
             Invalid video call name.
           </h1>
-          <Button size="sm" onClick={() => router.push('/')}>
+          <Button size="sm" onClick={() => router.push("/")}>
             Return to home screen
           </Button>
         </div>

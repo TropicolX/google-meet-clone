@@ -1,18 +1,12 @@
-import {
-  DefaultStreamChatGenerics,
-  MessageInput,
-  MessageList,
-  Channel,
-  Window,
-} from 'stream-chat-react';
-import { type Channel as ChannelType } from 'stream-chat';
+import { MessageInput, MessageList, Channel, Window } from "stream-chat-react";
+import { type Channel as ChannelType } from "stream-chat";
 
-import Popup from './Popup';
+import Popup from "./Popup";
 
 interface ChatPopupProps {
   isOpen: boolean;
   onClose: () => void;
-  channel: ChannelType<DefaultStreamChatGenerics>;
+  channel: ChannelType;
 }
 
 const ChatPopup = ({ channel, isOpen, onClose }: ChatPopupProps) => {
@@ -27,7 +21,7 @@ const ChatPopup = ({ channel, isOpen, onClose }: ChatPopupProps) => {
         <Channel channel={channel}>
           <Window>
             <MessageList disableDateSeparator />
-            <MessageInput noFiles />
+            <MessageInput />
           </Window>
         </Channel>
       </div>

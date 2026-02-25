@@ -1,49 +1,49 @@
-'use client';
-import { useContext, useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { SignInButton, useUser } from '@clerk/nextjs';
-import { customAlphabet } from 'nanoid';
+"use client";
+import { useContext, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { SignInButton, useUser } from "@clerk/nextjs";
+import { customAlphabet } from "nanoid";
 import {
   ErrorFromResponse,
   GetCallResponse,
   StreamVideoClient,
   User,
-} from '@stream-io/video-react-sdk';
-import Image from 'next/image';
-import clsx from 'clsx';
+} from "@stream-io/video-react-sdk";
+import Image from "next/image";
+import clsx from "clsx";
 
-import { API_KEY, CALL_TYPE } from '@/contexts/MeetProvider';
-import { AppContext, MEETING_ID_REGEX } from '@/contexts/AppProvider';
-import Button from '@/components/Button';
-import ButtonWithIcon from '@/components/ButtonWithIcon';
-import Header from '@/components/Header';
-import Keyboard from '@/components/icons/Keyboard';
-import PlainButton from '@/components/PlainButton';
-import TextField from '@/components/TextField';
-import Videocall from '@/components/icons/Videocall';
+import { API_KEY, CALL_TYPE } from "@/contexts/MeetProvider";
+import { AppContext, MEETING_ID_REGEX } from "@/contexts/AppProvider";
+import Button from "@/components/Button";
+import ButtonWithIcon from "@/components/ButtonWithIcon";
+import Header from "@/components/Header";
+import Keyboard from "@/components/icons/Keyboard";
+import PlainButton from "@/components/PlainButton";
+import TextField from "@/components/TextField";
+import Videocall from "@/components/icons/Videocall";
 
 const generateMeetingId = () => {
-  const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+  const alphabet = "abcdefghijklmnopqrstuvwxyz";
   const nanoid = customAlphabet(alphabet, 4);
 
   return `${nanoid(3)}-${nanoid(4)}-${nanoid(3)}`;
 };
 
-const GUEST_USER: User = { id: 'guest', type: 'guest' };
+const GUEST_USER: User = { id: "guest", type: "guest" };
 
 const Home = () => {
   const { setNewMeeting } = useContext(AppContext);
   const { isLoaded, isSignedIn } = useUser();
-  const [code, setCode] = useState('');
+  const [code, setCode] = useState("");
   const [checkingCode, setCheckingCode] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const router = useRouter();
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
     if (error) {
       timeout = setTimeout(() => {
-        setError('');
+        setError("");
       }, 3000);
     }
     return () => {
@@ -88,8 +88,8 @@ const Home = () => {
       <Header />
       <main
         className={clsx(
-          'flex flex-col items-center justify-center px-8',
-          isLoaded ? 'animate-fade-in' : 'opacity-0'
+          "flex flex-col items-center justify-center px-8",
+          isLoaded ? "animate-fade-in" : "opacity-0"
         )}
       >
         <div className="w-full max-w-2xl pt-7 text-center inline-flex flex-col items-center basis-auto shrink-0">
@@ -163,12 +163,12 @@ const Home = () => {
             </div>
           </div>
         )}
-        <footer className="w-full max-w-xl mt-20 pt-4 text-start">
+        <footer className="w-full max-w-xl mt-20 pt-4 pb-4 text-start">
           <div className="text-xs text-gray">
             <span className="cursor-pointer">
               <a className="text-meet-blue underline" href="#">
                 Learn more
-              </a>{' '}
+              </a>{" "}
               about Moogle Meet
             </span>
           </div>
